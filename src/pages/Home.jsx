@@ -1,9 +1,9 @@
-import AddProduct from "../components/AddProduct";
+import EditProduct from "../components/edite/EditProduct";
 
 const Home = () => {
   return (
     <div>
-      <AddProduct />
+      <EditProduct />
     </div>
   );
 };

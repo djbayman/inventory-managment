@@ -5,6 +5,7 @@ import { FaListCheck } from "react-icons/fa6";
 import { FiSettings } from "react-icons/fi";
 import { FaShapes } from "react-icons/fa6";
 import { MdOutlineLogout } from "react-icons/md";
+import { FaFolderOpen } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { InventoryContext } from "../context/GlobalContext";
@@ -15,15 +16,17 @@ const Sidebar = () => {
   return (
     <div className="sticky top-0 ">
       <div className="bg-cyan-900 text-white py-6 px-4 h-screen  ">
-        <div className="logo flex items-center justify-center gap-2">
-          <img src={logo} alt="" className="w-14 h-14" />
-          {sideBarToggle && (
-            <div>
-              <h1 className="text-2xl font-bold">Inventory</h1>
-              <h2 className="text-lg font-semibold">Mangment System</h2>
-            </div>
-          )}
-        </div>
+        <Link to="/">
+          <div className="logo flex items-center justify-center gap-2">
+            <img src={logo} alt="" className="w-14 h-14" />
+            {sideBarToggle && (
+              <div>
+                <h1 className="text-2xl font-bold">Inventory</h1>
+                <h2 className="text-lg font-semibold">Mangment System</h2>
+              </div>
+            )}
+          </div>
+        </Link>
         <div
           className=" flex flex-col justify-between  items-center"
           style={{ height: "89%" }}
@@ -38,12 +41,12 @@ const Sidebar = () => {
                   {sideBarToggle && "Dashboard"}
                 </li>
               </Link>
-              <Link to="/products">
+              <Link to="/purchases">
                 <li className="flex items-center gap-4 text-2xl  font-semibold px-3 py-3  mb-6 rounded-md hover:bg-cyan-950">
                   <span className="text-cyan-500">
                     <FaShapes />
                   </span>
-                  {sideBarToggle && "Products"}
+                  {sideBarToggle && "Purchases"}
                 </li>
               </Link>
               <Link to="/sales">
@@ -60,6 +63,14 @@ const Sidebar = () => {
                     <FiSettings />
                   </span>
                   {sideBarToggle && "Settings"}
+                </li>
+              </Link>
+              <Link to="/documents">
+                <li className="flex items-center gap-4 text-2xl  font-semibold px-3 py-3  mb-6 rounded-md hover:bg-cyan-950">
+                  <span className="text-cyan-500">
+                    <FaFolderOpen />
+                  </span>
+                  {sideBarToggle && "Documents"}
                 </li>
               </Link>
             </ul>
