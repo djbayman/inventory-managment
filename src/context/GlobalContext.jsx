@@ -11,6 +11,7 @@ export const initialState = {
   productImg: "",
   supplierID: "",
   supplierName: "",
+  date: "",
 };
 
 export const saleInitialState = {
@@ -20,8 +21,9 @@ export const saleInitialState = {
   soldProductPrice: "",
   soldCompanyName: "",
   soldProductImg: "",
-  soldProductSupplierID: "",
-  soldProductSupplierName: "",
+  soldProductClientID: "",
+  soldProductClientName: "",
+  soldDate: "",
 };
 
 export const editeInitialState = {
@@ -33,6 +35,7 @@ export const editeInitialState = {
   editeProductImg: "",
   editeSupplierID: "",
   editeSupplierName: "",
+  editeDate: "",
 };
 
 const InventoryProvider = ({ children }) => {
@@ -44,6 +47,9 @@ const InventoryProvider = ({ children }) => {
   const [fetchedData, setFetchedData] = useState([]);
   const [fetchedSoldData, setFetchedSoldData] = useState([]);
   const [soldKeys, setSoldKeys] = useState([]);
+  const [saleIt, setSaleIt] = useState([]);
+  const [imgPath, setImgPath] = useState("");
+  const [searchedResults, setSearchedResults] = useState([]);
 
   const [
     {
@@ -52,9 +58,9 @@ const InventoryProvider = ({ children }) => {
       productQuantity,
       productPrice,
       companyName,
-      productImg,
       supplierID,
       supplierName,
+      date,
     },
     setStates,
   ] = useState(initialState);
@@ -68,10 +74,10 @@ const InventoryProvider = ({ children }) => {
       editeProductImg,
       editeSupplierID,
       editeSupplierName,
+      editeDate,
     },
     setEditeStates,
   ] = useState({ ...editeInitialState });
-
   const [
     {
       soldProductID,
@@ -80,11 +86,13 @@ const InventoryProvider = ({ children }) => {
       soldProductPrice,
       soldCompanyName,
       soldProductImg,
-      soldProductSupplierID,
-      soldProductSupplierName,
+      soldProductClientID,
+      soldProductClientName,
+      soldDate,
     },
     setSoldProductStates,
   ] = useState(saleInitialState);
+  const [{ userName, userEmail, userPassowrd }, setUserState] = useState("");
 
   const value = {
     step,
@@ -98,9 +106,9 @@ const InventoryProvider = ({ children }) => {
     productQuantity,
     productPrice,
     companyName,
-    productImg,
     supplierID,
     supplierName,
+    date,
     setStates,
     fetchedData,
     setFetchedData,
@@ -114,6 +122,7 @@ const InventoryProvider = ({ children }) => {
     editeProductImg,
     editeSupplierID,
     editeSupplierName,
+    editeDate,
     setEditeStates,
     saleStep,
     setSaleStep,
@@ -123,13 +132,24 @@ const InventoryProvider = ({ children }) => {
     soldProductPrice,
     soldCompanyName,
     soldProductImg,
-    soldProductSupplierID,
-    soldProductSupplierName,
+    soldProductClientID,
+    soldProductClientName,
+    soldDate,
     setSoldProductStates,
     fetchedSoldData,
     setFetchedSoldData,
     soldKeys,
     setSoldKeys,
+    saleIt,
+    setSaleIt,
+    imgPath,
+    setImgPath,
+    searchedResults,
+    setSearchedResults,
+    userName,
+    userEmail,
+    userPassowrd,
+    setUserState,
   };
 
   return (

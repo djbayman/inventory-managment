@@ -1,0 +1,9 @@
+@media (max-width: 920px) {
+  .scroll-container {
+    width: 100%;
+    overflow-x: scroll;
+  }
+  .scroll-child {
+    width: 125%;
+  }
+}

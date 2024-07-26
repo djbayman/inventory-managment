@@ -1,32 +1,64 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
-import { FaArrowRight } from "react-icons/fa";
 import { InventoryContext } from "../context/GlobalContext";
+import { useLocation } from "react-router-dom";
 
 const Navbar = () => {
-  const { sideBarToggle, setSideBarToggle } = useContext(InventoryContext);
+  const [searchValue, setSearchValue] = useState("");
+  const location = useLocation().pathname;
+  const {
+    sideBarToggle,
+    setSideBarToggle,
+    fetchedData,
+    setSearchedResults,
+    fetchedSoldData,
+  } = useContext(InventoryContext);
+
+  useEffect(() => {
+    setSearchedResults([]);
+    if (location.includes("purchases") && searchValue !== "") {
+      const searchProduct = () => {
+        let searchResult = fetchedData?.filter((product) =>
+          product?.productName.toLowerCase().includes(searchValue.toLowerCase())
+        );
+        if (searchResult?.length) {
+          setSearchedResults(searchResult);
+        }
+      };
+      searchProduct(fetchedData);
+    } else if (location.includes("sales") && searchValue !== "") {
+      const searchProduct = () => {
+        let searchResult = fetchedSoldData?.filter((product) =>
+          product?.soldProductName
+            .toLowerCase()
+            .includes(searchValue.toLowerCase())
+        );
+        if (searchResult?.length) {
+          setSearchedResults(searchResult);
+        }
+      };
+      searchProduct();
+    }
+  }, [searchValue, fetchedData, location, fetchedSoldData, setSearchedResults]);
+
   return (
-    <div className="w-full flex items-center justify-between p-6 shadow-md ">
-      <div className="flex gap-4 items-center">
+    <div className="flex items-center justify-between p-4 shadow-md ">
+      <div className="flex items-center">
         <FaArrowLeft
-          className={
-            sideBarToggle
-              ? "cursor-pointer text-xl mt-2 transition-transform hover:bg-slate-200 w-10 h-10 p-2 rounded-md hover:text-cyan-800"
-              : "cursor-pointer text-xl mt-2 transition-transform hover:bg-slate-200 w-10 h-10 p-2 rounded-md hover:text-cyan-800 rotate-180"
-          }
+          className={`text-cyan-900 cursor-pointer transition-transform  w-6    rounded-md hover:text-cyan-800 ${
+            sideBarToggle ? "" : "rotate-180"
+          }`}
           onClick={() => setSideBarToggle(!sideBarToggle)}
         />
-        <h1 className="text-2xl font-bold">Dashboard</h1>
+        <h1 className="text-xl font-bold ps-2">Dashboard</h1>
       </div>
-      <div className="details flex items-center gap-2">
-        <div>
-          <p className="text-gray-500 text-lg">The name</p>
-          <span className="text-gray-500 text-lg">The Date</span>
-        </div>
-        <img
-          src=""
-          alt=""
-          className="w-10 h-10 rounded-full border-2 border-gray-800"
+      <div className="details flex w-60">
+        <input
+          type="text"
+          placeholder="Search for product by it's name"
+          className="w-full bg-gray-200 text-cyan-900 border-y-2 border-2 border-gray-500  ps-2 py-1 text-sm rounded-lg outline-none "
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
         />
       </div>
     </div>

@@ -1,38 +1,36 @@
 import { useContext } from "react";
 import { InventoryContext } from "../../context/GlobalContext";
 
-const SupplierDetails = () => {
-  const { supplierID, supplierName, setStates } = useContext(InventoryContext);
-
+const SoldProductClients = () => {
+  const { soldProductClientID, soldProductClientName, setSoldProductStates } =
+    useContext(InventoryContext);
   return (
     <div>
-      <h2 className="text-xl text-slate-500 my-5 font-bold">
-        Supplier Details
-      </h2>
+      <h2 className="text-xl text-slate-500 my-5 font-bold">Client Details</h2>
       <form className="grid sm:grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-8 mx-8">
-        <label className="hidden">Enter Supplier ID</label>
+        <label className="hidden">Enter Client ID</label>
         <input
           type="text"
-          placeholder="Enter Supplier ID"
+          placeholder="Enter Client ID"
           className="block border-2 border-slate-500 rounded-md  h-10 py-1 px-2  outline-none text-lg font-semibold focus:border-2 focus:border-cyan-950"
-          value={supplierID}
+          value={soldProductClientID}
           onChange={(e) =>
-            setStates((prevState) => ({
+            setSoldProductStates((prevState) => ({
               ...prevState,
-              supplierID: e.target.value,
+              soldProductClientID: e.target.value,
             }))
           }
         />
-        <label className="hidden">Enter Supplier Name</label>
+        <label className="hidden">Enter Clinet Name</label>
         <input
           type="text"
-          placeholder="Enter Supplier Name"
+          placeholder="Enter Client Name"
           className="block border-2 border-slate-500 rounded-md  h-10 py-1 px-2  outline-none text-lg font-semibold focus:border-2 focus:border-cyan-950"
-          value={supplierName}
+          value={soldProductClientName}
           onChange={(e) =>
-            setStates((prevState) => ({
+            setSoldProductStates((prevState) => ({
               ...prevState,
-              supplierName: e.target.value,
+              soldProductClientName: e.target.value,
             }))
           }
         />
@@ -41,4 +39,4 @@ const SupplierDetails = () => {
   );
 };
 
-export default SupplierDetails;
+export default SoldProductClients;

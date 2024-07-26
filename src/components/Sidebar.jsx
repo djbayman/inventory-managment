@@ -6,7 +6,7 @@ import { FiSettings } from "react-icons/fi";
 import { FaShapes } from "react-icons/fa6";
 import { MdOutlineLogout } from "react-icons/md";
 import { FaFolderOpen } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { InventoryContext } from "../context/GlobalContext";
 
@@ -14,65 +14,85 @@ const Sidebar = () => {
   const { sideBarToggle } = useContext(InventoryContext);
 
   return (
-    <div className="sticky top-0 ">
-      <div className="bg-cyan-900 text-white py-6 px-4 h-screen  ">
+    <div className="sticky top-0 " style={{ transition: "all linear 0.5s" }}>
+      <div className="bg-cyan-900 text-white py-6 px-2 h-screen">
         <Link to="/">
-          <div className="logo flex items-center justify-center gap-2">
-            <img src={logo} alt="" className="w-14 h-14" />
-            {sideBarToggle && (
-              <div>
-                <h1 className="text-2xl font-bold">Inventory</h1>
-                <h2 className="text-lg font-semibold">Mangment System</h2>
-              </div>
-            )}
+          <div className="logo xl:flex items-center text-center xl:text-left  gap-2 ">
+            <img
+              src={logo}
+              alt=""
+              className={`w-w-10 h-10 xl:m-0 ${
+                sideBarToggle ? "mx-auto" : "m-0"
+              }`}
+            />
+            <div className={sideBarToggle ? "block" : "hidden"}>
+              <h1 className=" text-lg font-bold">Inventory</h1>
+              <h2 className=" font-medium">Mangment System</h2>
+            </div>
           </div>
         </Link>
         <div
-          className=" flex flex-col justify-between  items-center"
-          style={{ height: "89%" }}
+          className=" flex flex-col justify-between"
+          style={{ height: "84%" }}
         >
           <div className="nav-links">
-            <ul className="my-10 ">
-              <Link to="/">
-                <li className="flex items-center gap-4 text-xl  font-semibold px-3 py-3  mb-6 rounded-md hover:bg-cyan-950">
-                  <span className="text-cyan-500 text-2xl">
-                    <MdDashboard />
-                  </span>
-                  {sideBarToggle && "Dashboard"}
-                </li>
-              </Link>
-              <Link to="/purchases">
-                <li className="flex items-center gap-4 text-2xl  font-semibold px-3 py-3  mb-6 rounded-md hover:bg-cyan-950">
-                  <span className="text-cyan-500">
-                    <FaShapes />
-                  </span>
-                  {sideBarToggle && "Purchases"}
-                </li>
-              </Link>
-              <Link to="/sales">
-                <li className="flex items-center gap-4 text-2xl  font-semibold px-3 py-3  mb-6 rounded-md hover:bg-cyan-950">
-                  <span className="text-cyan-500">
-                    <FaListCheck />
-                  </span>
-                  {sideBarToggle && "Sales"}
-                </li>
-              </Link>
-              <Link to="/settings">
-                <li className="flex items-center gap-4 text-2xl  font-semibold px-3 py-3  mb-6 rounded-md hover:bg-cyan-950">
-                  <span className="text-cyan-500">
-                    <FiSettings />
-                  </span>
-                  {sideBarToggle && "Settings"}
-                </li>
-              </Link>
-              <Link to="/documents">
-                <li className="flex items-center gap-4 text-2xl  font-semibold px-3 py-3  mb-6 rounded-md hover:bg-cyan-950">
-                  <span className="text-cyan-500">
-                    <FaFolderOpen />
-                  </span>
-                  {sideBarToggle && "Documents"}
-                </li>
-              </Link>
+            <ul className="mt-10 ">
+              <NavLink to="/">
+                {({ isActive }) => (
+                  <li
+                    className={`flex items-center gap-4 text-lg font-semibold p-2  mb-3 rounded-md hover:bg-cyan-950 transition-colors ${
+                      isActive ? "bg-cyan-950" : " "
+                    }`}
+                  >
+                    <span className="text-cyan-500">
+                      <MdDashboard />
+                    </span>
+                    {sideBarToggle && "Dashboard"}
+                  </li>
+                )}
+              </NavLink>
+              <NavLink to="/purchases">
+                {({ isActive }) => (
+                  <li
+                    className={`flex items-center gap-4 text-lg  font-semibold p-2  mb-3 rounded-md hover:bg-cyan-950 transition-colors ${
+                      isActive ? "bg-cyan-950" : " "
+                    }`}
+                  >
+                    <span className="text-cyan-500">
+                      <FaShapes />
+                    </span>
+                    {sideBarToggle && "Purchases"}
+                  </li>
+                )}
+              </NavLink>
+              <NavLink to="/sales">
+                {({ isActive }) => (
+                  <li
+                    className={`flex items-center gap-4 text-lg  font-semibold p-2  mb-3 rounded-md hover:bg-cyan-950 transition-colors ${
+                      isActive ? "bg-cyan-950" : " "
+                    }`}
+                  >
+                    <span className="text-cyan-500">
+                      <FaListCheck />
+                    </span>
+                    {sideBarToggle && "Sales"}
+                  </li>
+                )}
+              </NavLink>
+              <NavLink to="/settings">
+                {({ isActive }) => (
+                  <li
+                    className={`flex items-center gap-4 text-lg  font-semibold p-2  mb-6 rounded-md hover:bg-cyan-950 transition-colors ${
+                      isActive ? "bg-cyan-950" : " "
+                    }`}
+                  >
+                    <span className="text-cyan-500">
+                      <FiSettings />
+                    </span>
+                    {sideBarToggle && "Settings"}
+                  </li>
+                )}
+              </NavLink>
             </ul>
           </div>
           <div className="flex flex-col gap-5">
@@ -80,7 +100,7 @@ const Sidebar = () => {
               <img
                 src={icon}
                 alt=""
-                className="w-12 h-12 rounded-full border-2 border-gray-800"
+                className="w-10 h-10 rounded-full border-2 border-gray-800"
               />
               {sideBarToggle && (
                 <div>
@@ -92,12 +112,16 @@ const Sidebar = () => {
             <button
               className={
                 sideBarToggle
-                  ? "flex items-center justify-center gap-6  w-40 rounded bg-cyan-500 px-4 py-2 text-xl font-bold text-white  hover:bg-cyan-600 transition-all"
-                  : "w-12 h-12 rounded-full bg-cyan-500 text-white hover:bg-cyan-600 transition-all"
+                  ? "flex items-center justify-center gap-6  w-36 rounded bg-cyan-500 p-2 text-lg font-bold text-white  hover:bg-cyan-600 transition-all"
+                  : "w-10 h-10 rounded-full bg-cyan-500 text-white hover:bg-cyan-600 transition-all"
               }
             >
               {sideBarToggle && <span>Logout</span>}
-              <MdOutlineLogout className="text-2xl mx-auto" />
+              <MdOutlineLogout
+                className={
+                  sideBarToggle ? "text-lg ms-auto" : "mx-auto text-2xl"
+                }
+              />
             </button>
           </div>
         </div>

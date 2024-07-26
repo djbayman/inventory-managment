@@ -1,18 +1,21 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { RiPencilFill } from "react-icons/ri";
 import icon from "../assets/219986.png";
+import { InventoryContext } from "../context/GlobalContext";
 
 const Settings = () => {
   const [lableDisplay, setLableDisplay] = useState(false);
+  const { userName, userEmail, userPassword, setUserState } =
+    useContext(InventoryContext);
 
   return (
-    <div className="m-6">
-      <div className="comp-head my-6">
-        <h1 className="text-2xl font-bold mb-4">Profile</h1>
+    <div className="mx-4">
+      <div className="comp-head my-4">
+        <h1 className="text-xl font-bold ">Profile</h1>
         <p className="text-slate-500">Manage Your Profile Here</p>
       </div>
       <div className="flex flex-col items-center">
-        <div className="my-10 relative">
+        <div className="mb-4 relative">
           <img
             src={icon}
             alt=""
@@ -21,65 +24,92 @@ const Settings = () => {
           <RiPencilFill className="absolute bottom-0 right-3 text-4xl p-1 bg-white rounded-full cursor-pointer hover:text-cyan-800" />
         </div>
         <form className="w-1/3">
-          {/* <label className="relative">
+          <label className="relative ">
             <span
               className={
-                lableDisplay
-                  ? "absolute  w-24  text-center text-cyan-600 font-semibold text-lg z-10 bg-white p-1 transition-all"
-                  : "hidden "
+                "absolute w-24 text-center text-cyan-900 font-semibold text-lg z-10 bg-white p-1"
               }
-              style={{ top: "-20px", left: "15px" }}
+              style={{
+                top: lableDisplay ? "-20px" : "9px",
+                left: "9px",
+              }}
             >
               your name
             </span>
-          </label> */}
-          <input
-            type="text"
-            placeholder="your name"
-            className="mb-10 block w-full border-2 border-slate-500 rounded-md  h-14 py-1 px-2  outline-none text-xl font-semibold focus:border-4 focus:border-cyan-600 transition-colors"
-            onFocus={() => setLableDisplay(true)}
-            onBlur={() => setLableDisplay(false)}
-          />
-          {/* <label className="relative  ">
+            <input
+              type="text"
+              placeholder="your name"
+              className="mb-10 block w-full border-2 border-slate-400 rounded-md  h-14 py-1 px-2  outline-none text-xl font-semibold focus:border-2 focus:border-cyan-900 "
+              style={{ transition: "transform ease-in-out 0.5" }}
+              onFocus={() => setLableDisplay(true)}
+              onBlur={() => setLableDisplay(false)}
+              value={userName}
+              onChange={(e) =>
+                setUserState((prevState) => ({
+                  ...prevState,
+                  userName: e.target.value,
+                }))
+              }
+            />
+          </label>
+          <label className="relative ">
             <span
               className={
-                lableDisplay
-                  ? "absolute  w-24  text-center text-cyan-600 font-semibold text-lg z-10 bg-white p-1 transition-all"
-                  : "hidden "
+                "absolute w-24 text-center text-cyan-900 font-semibold text-lg z-10 bg-white p-1"
               }
-              style={{ top: "-20px", left: "15px" }}
+              style={{
+                top: lableDisplay ? "-20px" : "9px",
+                left: "9px",
+              }}
             >
               your email
             </span>
-          </label> */}
-          <input
-            type="email"
-            placeholder="your email"
-            className="mb-10 block w-full border-2 border-slate-500 rounded-md  h-14 py-1 px-2  outline-none text-xl font-semibold focus:border-4 focus:border-cyan-600 transition-colors"
-            onFocus={() => setLableDisplay(true)}
-            onBlur={() => setLableDisplay(false)}
-          />
-          {/* <label className="relative  ">
+            <input
+              type="email"
+              placeholder="your email"
+              className="mb-10 block w-full border-2 border-slate-400 rounded-md  h-14 py-1 px-2  outline-none text-xl font-semibold focus:border-2 focus:border-cyan-900 "
+              style={{ transition: "transform ease-in-out 0.5" }}
+              onFocus={() => setLableDisplay(true)}
+              onBlur={() => setLableDisplay(false)}
+              value={userEmail}
+              onChange={(e) =>
+                setUserState((prevState) => ({
+                  ...prevState,
+                  userEmail: e.target.value,
+                }))
+              }
+            />
+          </label>
+          <label className="relative ">
             <span
               className={
-                lableDisplay
-                  ? "absolute  w-24  text-center text-cyan-600 font-semibold text-lg z-10 bg-white p-1 transition-all"
-                  : "hidden "
+                "absolute w-38  text-cyan-900 font-semibold text-lg z-10 bg-white p-1 pe-3"
               }
-              style={{ top: "-20px", left: "15px" }}
+              style={{
+                top: lableDisplay ? "-20px" : "9px",
+                left: "9px",
+              }}
             >
               your password
             </span>
-          </label> */}
-          <input
-            type="text"
-            placeholder="your password"
-            className="mb-10 block w-full border-2 border-slate-500 rounded-md  h-14 py-1 px-2  outline-none text-xl font-semibold focus:border-4 focus:border-cyan-600 transition-colors"
-            onFocus={() => setLableDisplay(true)}
-            onBlur={() => setLableDisplay(false)}
-          />
+            <input
+              type="password"
+              placeholder="your password"
+              className="mb-10 block w-full border-2 border-slate-400 rounded-md h-14 py-1 px-2  outline-none text-xl font-semibold focus:border-2 focus:border-cyan-900 "
+              style={{ transition: "transform ease-in-out 0.5" }}
+              onFocus={() => setLableDisplay(true)}
+              onBlur={() => setLableDisplay(false)}
+              value={userPassword}
+              onChange={(e) =>
+                setUserState((prevState) => ({
+                  ...prevState,
+                  userPassword: e.target.value,
+                }))
+              }
+            />
+          </label>
           <div className="">
-            <button className="block  w-full  bg-cyan-800 text-xl font-bold text-white px-6 py-2 rounded hover:bg-slate-400 hover:text-black transition-colors">
+            <button className="block w-full  bg-cyan-800 text-xl font-bold text-white px-6 py-2 rounded hover:bg-slate-400 hover:text-black transition-colors">
               Save Changes
             </button>
           </div>

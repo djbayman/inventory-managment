@@ -14,7 +14,6 @@ const EditeComplete = () => {
 
   const {
     setEditeStep,
-    keys,
     editeProductID,
     editeProductName,
     editeProductQuantity,
@@ -24,12 +23,11 @@ const EditeComplete = () => {
     editeSupplierID,
     editeSupplierName,
     setEditeStates,
-    soldKeys,
   } = useContext(InventoryContext);
 
   const updateData = async () => {
     const db = getDatabase(app);
-    update(ref(db, "inventory/purshases/" + keys[parseInt(index)]), {
+    update(ref(db, "inventory/purchases/" + index), {
       productID: editeProductID,
       productName: editeProductName,
       productQuantity: editeProductQuantity,
@@ -52,7 +50,7 @@ const EditeComplete = () => {
   };
   const updateSaleData = async () => {
     const db = getDatabase(app);
-    update(ref(db, "inventory/sales/" + soldKeys[parseInt(index)]), {
+    update(ref(db, "inventory/sales/" + index), {
       soldProductID: editeProductID,
       soldProductName: editeProductName,
       soldProductQuantity: editeProductQuantity,
@@ -75,9 +73,9 @@ const EditeComplete = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-52">
+    <div className="flex items-center justify-center  min-h-40">
       <button
-        className="px-4 py-2 rounded-md text-xl font-semibold bg-cyan-600 text-white hover:bg-cyan-700 transition-colors"
+        className="px-2 py-1 rounded-md text-lg font-semibold bg-cyan-600 text-white hover:bg-cyan-700 transition-colors"
         onClick={() => {
           if (location.pathname.includes("purchases")) {
             updateData();

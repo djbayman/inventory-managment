@@ -13,24 +13,27 @@ const Complete = () => {
     productQuantity,
     productPrice,
     companyName,
-    productImg,
     supplierID,
     supplierName,
+    date,
     setStates,
   } = useContext(InventoryContext);
 
   const saveData = async () => {
+    const timeElapsed = Date.now();
+    const today = new Date(timeElapsed).toUTCString().slice(0, 11);
+
     const db = getDatabase(app);
-    const newDocRef = push(ref(db, "inventory/purshases"));
+    const newDocRef = push(ref(db, "inventory/purchases"));
     set(newDocRef, {
       productID,
       productName,
       productPrice,
       productQuantity,
       companyName,
-      productImg,
       supplierID,
       supplierName,
+      date: today,
     })
       .then(() => {
         setStep(1);
@@ -42,10 +45,10 @@ const Complete = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-52">
+    <div className="flex items-center justify-center min-h-40">
       <Link to="/purchases">
         <button
-          className="px-4 py-2 rounded-md text-xl font-semibold bg-cyan-600 text-white hover:bg-cyan-700 transition-colors"
+          className="px-2 py-1 rounded-md text-lg font-semibold bg-cyan-600 text-white hover:bg-cyan-700 transition-colors"
           onClick={() => saveData()}
         >
           Complete
