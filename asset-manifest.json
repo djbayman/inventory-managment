@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/inventory-managment/static/css/main.55e29f52.css",
+    "main.js": "/inventory-managment/static/js/main.a0fea268.js",
+    "static/media/download.png": "/inventory-managment/static/media/download.8b22de75aed72d14b875.png",
+    "static/media/219986.png": "/inventory-managment/static/media/219986.3b87c8990c94ad8d1aa5.png",
+    "static/media/depositphotos_2891341-stock-photo-modern-laptop.jpg": "/inventory-managment/static/media/depositphotos_2891341-stock-photo-modern-laptop.f548df63d759dc88ca09.jpg",
+    "index.html": "/inventory-managment/index.html",
+    "main.55e29f52.css.map": "/inventory-managment/static/css/main.55e29f52.css.map",
+    "main.a0fea268.js.map": "/inventory-managment/static/js/main.a0fea268.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.55e29f52.css",
+    "static/js/main.a0fea268.js"
+  ]
+}
