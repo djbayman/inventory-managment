@@ -27,7 +27,7 @@ const EditeProductDetails = () => {
               editeProductID: e.target.value,
             }))
           }
-          maxlength="7"
+          maxLength="7"
         />
         <label className="hidden">Enter The Product Name</label>
         <input

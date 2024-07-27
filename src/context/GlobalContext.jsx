@@ -8,7 +8,6 @@ export const initialState = {
   productQuantity: "",
   productPrice: "",
   companyName: "",
-  productImg: "",
   supplierID: "",
   supplierName: "",
   date: "",
@@ -49,6 +48,7 @@ const InventoryProvider = ({ children }) => {
   const [soldKeys, setSoldKeys] = useState([]);
   const [saleIt, setSaleIt] = useState([]);
   const [searchedResults, setSearchedResults] = useState([]);
+  const [productImgs, setProductImgs] = useState(null);
   const [imgUrls, setImgUrls] = useState([]);
 
   const [
@@ -58,7 +58,6 @@ const InventoryProvider = ({ children }) => {
       productQuantity,
       productPrice,
       companyName,
-      productImg,
       supplierID,
       supplierName,
       date,
@@ -107,7 +106,6 @@ const InventoryProvider = ({ children }) => {
     productQuantity,
     productPrice,
     companyName,
-    productImg,
     supplierID,
     supplierName,
     date,
@@ -150,6 +148,8 @@ const InventoryProvider = ({ children }) => {
     userEmail,
     userPassowrd,
     setUserState,
+    productImgs,
+    setProductImgs,
     imgUrls,
     setImgUrls,
   };

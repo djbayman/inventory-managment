@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { InventoryContext } from "../../context/GlobalContext";
 import { getDatabase, push, ref, set } from "firebase/database";
 import { app, storage } from "../../firebaseConfig";
@@ -7,6 +7,7 @@ import { initialState } from "../../context/GlobalContext";
 import { uploadBytes, ref as stRef, getDownloadURL } from "firebase/storage";
 
 const Complete = () => {
+  let number = 0;
   const {
     setStep,
     productID,
@@ -14,7 +15,8 @@ const Complete = () => {
     productQuantity,
     productPrice,
     companyName,
-    productImg,
+    productImgs,
+    setProductImgs,
     supplierID,
     supplierName,
     date,
@@ -48,11 +50,10 @@ const Complete = () => {
   };
 
   const uploadImage = async () => {
-    if (productImg === null) return;
-
-    // const imagesListRef = stRef(storage, "images/");
-    const imageRef = stRef(storage, `inv-file/${productImg?.name}`);
-    uploadBytes(imageRef, productImg).then((snapshot) => {
+    // setImgUrls([]);
+    if (productImgs === null) return;
+    const imageRef = stRef(storage, `inv-file/${productImgs.name}`);
+    uploadBytes(imageRef, productImgs).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
         setImgUrls((prev) => [...prev, url]);
       });

@@ -7,7 +7,14 @@ import { CgDollar } from "react-icons/cg";
 import { useContext, useEffect, useState } from "react";
 import { InventoryContext } from "../context/GlobalContext";
 import { getDatabase, onValue, ref, remove } from "firebase/database";
-import { app } from "../firebaseConfig";
+import {
+  getStorage,
+  ref as stRef,
+  deleteObject,
+  listAll,
+  getDownloadURL,
+} from "firebase/storage";
+import { app, storage } from "../firebaseConfig";
 
 const Purchases = () => {
   const [toggle, setToggle] = useState({});
@@ -22,6 +29,8 @@ const Purchases = () => {
     setSaleIt,
     searchedResults,
     imgUrls,
+    setImgUrls,
+    productImgs,
   } = useContext(InventoryContext);
 
   const fetchData = async () => {
@@ -36,9 +45,20 @@ const Purchases = () => {
     });
   };
 
+  const globalRef = stRef(storage, `inv-file/`);
   useEffect(() => {
     fetchData();
+    setImgUrls([]);
+    listAll(globalRef).then((response) => {
+      response.items.forEach((item) => {
+        getDownloadURL(item).then((url) => {
+          setImgUrls((prev) => [...prev, url]);
+        });
+      });
+    });
   }, []);
+
+  console.log(imgUrls);
 
   const getProductById = (index) => {
     let specificProduct = fetchedData?.filter((data, i) => i === index);
@@ -62,14 +82,19 @@ const Purchases = () => {
     });
   };
 
-  const deletProduct = async (id) => {
-    console.log(id);
+  const deletProduct = async (id, index) => {
     const db = getDatabase(app);
     const dbRef = ref(db, "inventory/purchases/" + id);
     await remove(dbRef);
-    if (keys[0] === id) {
+    if (fetchedData.length === 0) {
       window.location.reload();
     }
+    // delete the img
+    listAll(globalRef).then((response) => {
+      let deletedImg = response?.items.filter((item, iItem) => iItem === index);
+      const imgRef = stRef(storage, `inv-file/${deletedImg[0]?.name}`);
+      deleteObject(imgRef).then(() => setImgUrls());
+    });
   };
 
   const toggleFunction = (id) => {
@@ -139,7 +164,10 @@ const Purchases = () => {
               <li className="my-auto  relative">
                 <CiSquareMore
                   className=" text-2xl text-cyan-950 cursor-pointer"
-                  onClick={() => toggleFunction(index)}
+                  onClick={() => {
+                    // listItem();
+                    toggleFunction(index);
+                  }}
                 />
                 <div
                   className={
@@ -166,7 +194,7 @@ const Purchases = () => {
                   </span>
                   <span
                     className="flex items-center gap-2 ps-4 pt-2 hover:border-x-4 hover:border-red-600 hover:bg-gray-200 transition-colors cursor-pointer"
-                    onClick={() => deletProduct(keys[index])}
+                    onClick={() => deletProduct(keys[index], index)}
                   >
                     <FiTrash2 /> Delete
                   </span>

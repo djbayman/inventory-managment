@@ -1,11 +1,10 @@
 import logo from "../assets/download.png";
-import icon from "../assets/219986.png";
+import icon from "../assets/438089354_957421755750130_9050087029746523769_n.jpg";
 import { MdDashboard } from "react-icons/md";
 import { FaListCheck } from "react-icons/fa6";
 import { FiSettings } from "react-icons/fi";
 import { FaShapes } from "react-icons/fa6";
 import { MdOutlineLogout } from "react-icons/md";
-import { FaFolderOpen } from "react-icons/fa6";
 import { Link, NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { InventoryContext } from "../context/GlobalContext";

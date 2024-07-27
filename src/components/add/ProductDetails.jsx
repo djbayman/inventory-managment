@@ -8,9 +8,8 @@ const ProductDetails = () => {
     productQuantity,
     productPrice,
     companyName,
-    productImg,
+    setProductImgs,
     setStates,
-    setImgPath,
   } = useContext(InventoryContext);
 
   return (
@@ -29,7 +28,7 @@ const ProductDetails = () => {
               productID: e.target.value,
             }))
           }
-          maxlength="7"
+          maxLength="7"
         />
         <label className="hidden">Enter The Product Name</label>
         <input
@@ -94,12 +93,7 @@ const ProductDetails = () => {
       file:bg-indigo-500 file:text-white
       hover:file:bg-violet-50
       hover:file:text-cyan-800 cursor-pointer"
-            onChange={(e) =>
-              setStates((prevState) => ({
-                ...prevState,
-                productImg: e.target.files[0],
-              }))
-            }
+            onChange={(e) => setProductImgs(e.target.files[0])}
           />
         </label>
       </form>
