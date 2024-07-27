@@ -27,7 +27,7 @@ const Sidebar = () => {
             />
             <div className={sideBarToggle ? "block" : "hidden"}>
               <h1 className=" text-lg font-bold">Inventory</h1>
-              <h2 className=" font-medium">Mangment System</h2>
+              <h2 className="text-sm font-medium">Mangment System</h2>
             </div>
           </div>
         </Link>

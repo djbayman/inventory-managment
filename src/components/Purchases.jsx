@@ -20,11 +20,9 @@ const Purchases = () => {
     setEditeStates,
     keys,
     setSaleIt,
-    imgPath,
     searchedResults,
+    imgUrls,
   } = useContext(InventoryContext);
-
-  let theFullImgPath = `../assets/${imgPath}`;
 
   const fetchData = async () => {
     const db = getDatabase(app);
@@ -100,7 +98,8 @@ const Purchases = () => {
         <ul
           className="scroll-child p-2 text-gray-900 text-sm grid gap-4  border-b-2 border-slate-300 "
           style={{
-            gridTemplateColumns: "minmax(auto, 60px) repeat(6, 1fr) 60px",
+            gridTemplateColumns:
+              "minmax(auto, 60px) repeat(6, minmax(110px, 1fr)) 60px",
           }}
         >
           <li className="border-e-2 border-slate-300 text-left my-auto">#</li>
@@ -117,7 +116,8 @@ const Purchases = () => {
             <ul
               className="scroll-child p-2 text-gray-900 text-sm grid gap-4  border-b-2 border-slate-300 "
               style={{
-                gridTemplateColumns: "minmax(auto, 60px) repeat(6, 1fr) 60px",
+                gridTemplateColumns:
+                  "minmax(auto, 60px) repeat(6, minmax(110px, 1fr)) 60px",
               }}
               key={index}
             >
@@ -127,7 +127,7 @@ const Purchases = () => {
               <li className="my-auto ">{data.productName}</li>
               <li className="my-auto ">
                 <img
-                  src={`../assets/219986.png`}
+                  src={imgUrls[index]}
                   alt=""
                   className="w-10 h-10 rounded-full my-auto"
                 />

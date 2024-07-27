@@ -131,7 +131,7 @@ const Sales = () => {
                 <div
                   className={
                     toggle[index]
-                      ? "absolute top-10 right-32 w-24 bg-gray-200 text-black font-semibold rounded-md"
+                      ? "absolute top-0 right-16  w-24 bg-gray-200 text-black font-semibold rounded-md"
                       : "hidden"
                   }
                 >

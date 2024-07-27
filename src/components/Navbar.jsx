@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { InventoryContext } from "../context/GlobalContext";
 import { useLocation } from "react-router-dom";
+import { FaSearch } from "react-icons/fa";
 
 const Navbar = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -52,14 +53,15 @@ const Navbar = () => {
         />
         <h1 className="text-xl font-bold ps-2">Dashboard</h1>
       </div>
-      <div className="details flex w-60">
+      <div className="details flex w-60 relative">
         <input
           type="text"
           placeholder="Search for product by it's name"
-          className="w-full bg-gray-200 text-cyan-900 border-y-2 border-2 border-gray-500  ps-2 py-1 text-sm rounded-lg outline-none "
+          className=" w-full font-semibold bg-gray-200 text-cyan-900 border-y-2 border-2 border-gray-500  ps-2 py-1 text-sm rounded-lg outline-none "
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
         />
+        <FaSearch className="absolute text-cyan-800 top-2 right-2" />
       </div>
     </div>
   );

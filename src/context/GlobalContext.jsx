@@ -48,8 +48,8 @@ const InventoryProvider = ({ children }) => {
   const [fetchedSoldData, setFetchedSoldData] = useState([]);
   const [soldKeys, setSoldKeys] = useState([]);
   const [saleIt, setSaleIt] = useState([]);
-  const [imgPath, setImgPath] = useState("");
   const [searchedResults, setSearchedResults] = useState([]);
+  const [imgUrls, setImgUrls] = useState([]);
 
   const [
     {
@@ -58,6 +58,7 @@ const InventoryProvider = ({ children }) => {
       productQuantity,
       productPrice,
       companyName,
+      productImg,
       supplierID,
       supplierName,
       date,
@@ -106,6 +107,7 @@ const InventoryProvider = ({ children }) => {
     productQuantity,
     productPrice,
     companyName,
+    productImg,
     supplierID,
     supplierName,
     date,
@@ -142,14 +144,14 @@ const InventoryProvider = ({ children }) => {
     setSoldKeys,
     saleIt,
     setSaleIt,
-    imgPath,
-    setImgPath,
     searchedResults,
     setSearchedResults,
     userName,
     userEmail,
     userPassowrd,
     setUserState,
+    imgUrls,
+    setImgUrls,
   };
 
   return (

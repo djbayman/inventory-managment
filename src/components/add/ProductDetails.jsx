@@ -8,6 +8,7 @@ const ProductDetails = () => {
     productQuantity,
     productPrice,
     companyName,
+    productImg,
     setStates,
     setImgPath,
   } = useContext(InventoryContext);
@@ -93,7 +94,12 @@ const ProductDetails = () => {
       file:bg-indigo-500 file:text-white
       hover:file:bg-violet-50
       hover:file:text-cyan-800 cursor-pointer"
-            onChange={(e) => setImgPath(e.target.files[0].name)}
+            onChange={(e) =>
+              setStates((prevState) => ({
+                ...prevState,
+                productImg: e.target.files[0],
+              }))
+            }
           />
         </label>
       </form>
