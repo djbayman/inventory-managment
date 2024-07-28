@@ -11,6 +11,7 @@ import { useContext } from "react";
 import { InventoryContext } from "./context/GlobalContext";
 import EditProduct from "./components/edite/EditProduct";
 import SaleProduct from "./components/sold/SaleProduct";
+import Dashboard from "./components/Dashboard";
 
 function App() {
   const { sideBarToggle } = useContext(InventoryContext);
@@ -26,6 +27,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="purchases" element={<Purchases />} />
           <Route path="/purchases/addProduct" element={<AddProduct />} />
           <Route

@@ -8,7 +8,6 @@ import { useContext, useEffect, useState } from "react";
 import { InventoryContext } from "../context/GlobalContext";
 import { getDatabase, onValue, ref, remove } from "firebase/database";
 import {
-  getStorage,
   ref as stRef,
   deleteObject,
   listAll,
@@ -30,7 +29,6 @@ const Purchases = () => {
     searchedResults,
     imgUrls,
     setImgUrls,
-    productImgs,
   } = useContext(InventoryContext);
 
   const fetchData = async () => {
@@ -45,7 +43,7 @@ const Purchases = () => {
     });
   };
 
-  const globalRef = stRef(storage, `inv-file/`);
+  const globalRef = stRef(storage, `inv-file/purchasesImgs/`);
   useEffect(() => {
     fetchData();
     setImgUrls([]);
@@ -58,7 +56,7 @@ const Purchases = () => {
     });
   }, []);
 
-  console.log(imgUrls);
+  // console.log(imgUrls);
 
   const getProductById = (index) => {
     let specificProduct = fetchedData?.filter((data, i) => i === index);
@@ -68,7 +66,6 @@ const Purchases = () => {
       editeProductQuantity: specificProduct[0]?.productQuantity,
       editeProductPrice: specificProduct[0]?.productPrice,
       editeCompanyName: specificProduct[0]?.companyName,
-      editeProductImg: specificProduct[0]?.productImg,
       editeSupplierID: specificProduct[0]?.supplierID,
       editeSupplierName: specificProduct[0]?.supplierName,
     });
@@ -86,14 +83,18 @@ const Purchases = () => {
     const db = getDatabase(app);
     const dbRef = ref(db, "inventory/purchases/" + id);
     await remove(dbRef);
-    if (fetchedData.length === 0) {
-      window.location.reload();
+    if (fetchedData.length === 1) {
+      setFetchedData([]);
     }
     // delete the img
     listAll(globalRef).then((response) => {
       let deletedImg = response?.items.filter((item, iItem) => iItem === index);
-      const imgRef = stRef(storage, `inv-file/${deletedImg[0]?.name}`);
-      deleteObject(imgRef).then(() => setImgUrls());
+      console.log(deletedImg);
+      const imgRef = stRef(
+        storage,
+        `inv-file/purchasesImgs/${deletedImg[0]?.name}`
+      );
+      deleteObject(imgRef);
     });
   };
 
@@ -123,8 +124,7 @@ const Purchases = () => {
         <ul
           className="scroll-child p-2 text-gray-900 text-sm grid gap-4  border-b-2 border-slate-300 "
           style={{
-            gridTemplateColumns:
-              "minmax(auto, 60px) repeat(6, minmax(110px, 1fr)) 60px",
+            gridTemplateColumns: "60px repeat(6, 1fr) 60px",
           }}
         >
           <li className="border-e-2 border-slate-300 text-left my-auto">#</li>
@@ -141,8 +141,7 @@ const Purchases = () => {
             <ul
               className="scroll-child p-2 text-gray-900 text-sm grid gap-4  border-b-2 border-slate-300 "
               style={{
-                gridTemplateColumns:
-                  "minmax(auto, 60px) repeat(6, minmax(110px, 1fr)) 60px",
+                gridTemplateColumns: "60px repeat(6, 1fr) 60px",
               }}
               key={index}
             >

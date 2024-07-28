@@ -19,7 +19,6 @@ const EditeComplete = () => {
     editeProductQuantity,
     editeProductPrice,
     editeCompanyName,
-    editeProductImg,
     editeSupplierID,
     editeSupplierName,
     setEditeStates,
@@ -33,7 +32,6 @@ const EditeComplete = () => {
       productQuantity: editeProductQuantity,
       productPrice: editeProductPrice,
       companyName: editeCompanyName,
-      productImg: editeProductImg,
       supplierID: editeSupplierID,
       supplierName: editeSupplierName,
     })
@@ -56,7 +54,6 @@ const EditeComplete = () => {
       soldProductQuantity: editeProductQuantity,
       soldProductPrice: editeProductPrice,
       soldCompanyName: editeCompanyName,
-      soldProductImg: editeProductImg,
       soldProductSupplierID: editeSupplierID,
       soldProductSupplierName: editeSupplierName,
     })

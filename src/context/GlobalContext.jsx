@@ -19,7 +19,6 @@ export const saleInitialState = {
   soldProductQuantity: "",
   soldProductPrice: "",
   soldCompanyName: "",
-  soldProductImg: "",
   soldProductClientID: "",
   soldProductClientName: "",
   soldDate: "",
@@ -49,7 +48,9 @@ const InventoryProvider = ({ children }) => {
   const [saleIt, setSaleIt] = useState([]);
   const [searchedResults, setSearchedResults] = useState([]);
   const [productImgs, setProductImgs] = useState(null);
+  const [soldProductImgs, setSoldProductImgs] = useState(null);
   const [imgUrls, setImgUrls] = useState([]);
+  const [soldImgUrls, setSoldImgUrls] = useState([]);
 
   const [
     {
@@ -85,7 +86,6 @@ const InventoryProvider = ({ children }) => {
       soldProductQuantity,
       soldProductPrice,
       soldCompanyName,
-      soldProductImg,
       soldProductClientID,
       soldProductClientName,
       soldDate,
@@ -131,7 +131,6 @@ const InventoryProvider = ({ children }) => {
     soldProductQuantity,
     soldProductPrice,
     soldCompanyName,
-    soldProductImg,
     soldProductClientID,
     soldProductClientName,
     soldDate,
@@ -152,6 +151,10 @@ const InventoryProvider = ({ children }) => {
     setProductImgs,
     imgUrls,
     setImgUrls,
+    soldProductImgs,
+    setSoldProductImgs,
+    soldImgUrls,
+    setSoldImgUrls,
   };
 
   return (

@@ -1,13 +1,18 @@
 import { CiSquareMore } from "react-icons/ci";
-import productImg from "../assets/depositphotos_2891341-stock-photo-modern-laptop.jpg";
 import { Link } from "react-router-dom";
 import { FaPlus } from "react-icons/fa6";
 import { FiEdit3 } from "react-icons/fi";
 import { FiTrash2 } from "react-icons/fi";
 import { useContext, useEffect, useState } from "react";
 import { getDatabase, onValue, ref, remove } from "firebase/database";
-import { app } from "../firebaseConfig";
+import { app, storage } from "../firebaseConfig";
 import { InventoryContext } from "../context/GlobalContext";
+import {
+  ref as stRef,
+  deleteObject,
+  listAll,
+  getDownloadURL,
+} from "firebase/storage";
 
 const Sales = () => {
   const [toggle, setToggle] = useState({});
@@ -18,6 +23,8 @@ const Sales = () => {
     setSoldKeys,
     soldKeys,
     searchedResults,
+    setSoldImgUrls,
+    soldImgUrls,
   } = useContext(InventoryContext);
 
   const fetchSoldData = async () => {
@@ -32,8 +39,20 @@ const Sales = () => {
     });
   };
 
+  const globalRef = stRef(storage, `inv-file/salesImgs/`);
+
   useEffect(() => {
     fetchSoldData();
+    setSoldImgUrls([]);
+    listAll(globalRef).then((response) => {
+      response.items.forEach((item) => {
+        console.log(item);
+        getDownloadURL(item).then((url) => {
+          console.log(url);
+          setSoldImgUrls((prev) => [...prev, url]);
+        });
+      });
+    });
   }, []);
 
   const getSoldProductById = (index) => {
@@ -50,13 +69,23 @@ const Sales = () => {
     });
   };
 
-  const deletSoldProduct = async (id) => {
+  const deletSoldProduct = async (id, index) => {
     const db = getDatabase(app);
     const dbRef = ref(db, "inventory/sales/" + id);
     await remove(dbRef);
-    if (soldKeys[0] === id) {
-      window.location.reload();
+    if (fetchedSoldData.length === 1) {
+      setFetchedSoldData([]);
     }
+    // delete the img
+    listAll(globalRef).then((response) => {
+      console.log(response);
+      let deletedImg = response?.items.filter((item, iItem) => iItem === index);
+      const imgRef = stRef(
+        storage,
+        `inv-file/purchasesImgs/${deletedImg[0]?.name}`
+      );
+      deleteObject(imgRef);
+    });
   };
 
   const toggleFunction = (id) => {
@@ -87,7 +116,7 @@ const Sales = () => {
         <ul
           className="scroll-child p-2 text-gray-900 text-sm grid gap-4  border-b-2 border-slate-300 "
           style={{
-            gridTemplateColumns: "50px repeat(6, 1fr) 60px",
+            gridTemplateColumns: "60px repeat(6, 1fr) 60px",
           }}
         >
           <li className="border-e-2 border-slate-300 text-left my-auto">#</li>
@@ -104,7 +133,7 @@ const Sales = () => {
             <ul
               className="scroll-child p-2 text-gray-900 text-sm grid gap-4  border-b-2 border-slate-300 "
               style={{
-                gridTemplateColumns: "50px repeat(6, 1fr) 60px",
+                gridTemplateColumns: "60px repeat(6, 1fr) 60px",
               }}
               key={index}
             >
@@ -114,7 +143,7 @@ const Sales = () => {
               <li className="my-auto ">{data.soldProductName}</li>
               <li className=" ">
                 <img
-                  src={data.soldProductImg}
+                  src={soldImgUrls[index]}
                   alt=""
                   className="w-10 h-10 rounded-full my-auto"
                 />

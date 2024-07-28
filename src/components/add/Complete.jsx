@@ -50,9 +50,11 @@ const Complete = () => {
   };
 
   const uploadImage = async () => {
-    // setImgUrls([]);
     if (productImgs === null) return;
-    const imageRef = stRef(storage, `inv-file/${productImgs.name}`);
+    const imageRef = stRef(
+      storage,
+      `inv-file/purchasesImgs/${productImgs.name}`
+    );
     uploadBytes(imageRef, productImgs).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
         setImgUrls((prev) => [...prev, url]);

@@ -36,7 +36,7 @@ const Sidebar = () => {
         >
           <div className="nav-links">
             <ul className="mt-10 ">
-              <NavLink to="/">
+              <NavLink to="/dashboard">
                 {({ isActive }) => (
                   <li
                     className={`flex items-center gap-4 text-lg font-semibold p-2  mb-3 rounded-md hover:bg-cyan-950 transition-colors ${
@@ -103,8 +103,13 @@ const Sidebar = () => {
               />
               {sideBarToggle && (
                 <div>
-                  <p className="font-semibold text-slate-300">The Name</p>
-                  <span className="text-sm text-slate-100">email</span>
+                  <p className="font-semibold text-slate-300">Hadeel 🙂</p>
+                  <span className="text-xs text-slate-100 block">
+                    The White princesse ♥️
+                  </span>
+                  <span className="text-xs text-slate-100 block">
+                    The Nature girl 🌴 🍉
+                  </span>
                 </div>
               )}
             </div>

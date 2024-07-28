@@ -128,7 +128,7 @@ const Settings = () => {
 
       {/* hna hadeel */}
       <div
-        className="w-60 bg-emerald-500	rounded-md ms-auto text-center "
+        className="w-60 bg-teal-700	rounded-md ms-auto text-center "
         style={{ scrollBehavior: "smooth" }}
         onClick={() => executeScroll()}
       >
@@ -138,7 +138,7 @@ const Settings = () => {
       </div>
       <div style={{ height: "400px" }}></div>
       <div ref={myRef}>
-        <div className="text-right me-28">
+        <div className="mx-auto mb-4 rounded-lg text-right text-white w-fit bg-teal-700 p-3">
           <h1>تعرفي علاش حبيت نحكي معاك ؟</h1>
           <p>
             في بودواو كان عندي وحد لبلاصة ديما نروح نريح فيها نتخلوا معا روحي
@@ -147,8 +147,11 @@ const Settings = () => {
           <p> لعام هادا مارحتش كامل </p>
           <p> ...كي شفتك أول خطرة جات في بالي هاديك لبلاصة </p>
           <p>🌳🌳 و كي دخلت للكونت نتاعك لقيت هادو </p>
+
+          <p>So I'm glad that I can speak with you right now...</p>
         </div>
         <Girl />
+        <p>🕊️ و هادا البارتي الثاني علاش قتلك ننشبهي للحمامة</p>
       </div>
     </div>
   );

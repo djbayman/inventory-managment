@@ -11,9 +11,9 @@ const SoldProductDetails = () => {
     soldProductQuantity,
     soldProductPrice,
     soldCompanyName,
-    soldProductImg,
     setSoldProductStates,
     saleIt,
+    setSoldProductImgs,
   } = useContext(InventoryContext);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const SoldProductDetails = () => {
         soldProductQuantity: saleIt[0]?.productQuantity,
         soldProductPrice: saleIt[0]?.productPrice,
         soldCompanyName: saleIt[0]?.companyName,
-        soldProductImg: saleIt[0]?.productImg,
+        // soldProductImg: saleIt[0]?.productImg,
       });
     }
   }, [previousLocationPathname, saleIt, setSoldProductStates]);
@@ -110,7 +110,7 @@ const SoldProductDetails = () => {
       file:bg-indigo-500 file:text-white
       hover:file:bg-violet-50
       hover:file:text-cyan-800 cursor-pointer"
-            // onChange={(e) => setImgPath(e.target.files[0].name)}
+            onChange={(e) => setSoldProductImgs(e.target.files[0])}
           />
         </label>
       </form>
