@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { InventoryContext } from "../../context/GlobalContext";
 
 const EditeProductDetails = () => {
@@ -9,7 +9,30 @@ const EditeProductDetails = () => {
     editeProductPrice,
     editeCompanyName,
     setEditeStates,
+    setSoldProductImgs,
+    setEditeNext,
   } = useContext(InventoryContext);
+
+  useEffect(() => {
+    if (
+      editeProductID &&
+      editeProductName &&
+      editeProductQuantity &&
+      editeProductPrice &&
+      editeCompanyName
+    ) {
+      setEditeNext(true);
+    } else {
+      setEditeNext(false);
+    }
+  }, [
+    editeProductID,
+    editeProductName,
+    editeProductQuantity,
+    editeProductPrice,
+    editeCompanyName,
+    setEditeNext,
+  ]);
 
   return (
     <div>
@@ -92,7 +115,7 @@ const EditeProductDetails = () => {
       file:bg-indigo-500 file:text-white
       hover:file:bg-violet-50
       hover:file:text-cyan-800 cursor-pointer"
-            // onChange={(e) => (e.target.files[0].name)}
+            onChange={(e) => setSoldProductImgs(e.target.files[0])}
           />
         </label>
       </form>

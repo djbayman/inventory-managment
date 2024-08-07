@@ -4,11 +4,12 @@ import { FaCheckCircle } from "react-icons/fa";
 import ProductDetails from "./ProductDetails";
 import SupplierDetails from "./SupplierDetails";
 import Complete from "./Complete";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { InventoryContext } from "../../context/GlobalContext";
 
 const AddProduct = () => {
-  const { step, setStep } = useContext(InventoryContext);
+  const [step, setStep] = useState(1);
+  const { next } = useContext(InventoryContext);
 
   return (
     <div className="mx-4">
@@ -82,12 +83,14 @@ const AddProduct = () => {
           Back
         </button>
         <button
-          className={
-            step === 3
-              ? "hidden"
-              : "px-4 py-1 bg-cyan-600 hover:bg-cyan-700 transition-colors text-white font-semibold rounded-md"
-          }
-          onClick={() => setStep(step + 1)}
+          className={`${
+            next
+              ? " bg-cyan-600 hover:bg-cyan-700 text-white"
+              : " bg-gray-600  text-white cursor-not-allowed"
+          } px-4 py-1 font-semibold rounded-md transition-colors ${
+            step === 3 ? "hidden" : ""
+          }`}
+          onClick={() => setStep(next ? step + 1 : step)}
         >
           Next
         </button>

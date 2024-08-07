@@ -1,25 +1,18 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useState } from "react";
 import { RiPencilFill } from "react-icons/ri";
-import icon from "../assets/438089354_957421755750130_9050087029746523769_n.jpg";
+import icon from "../assets/hadeel/453114599_850935406504478_7290397330912126867_n.gif";
 import { InventoryContext } from "../context/GlobalContext";
-import Girl from "./Girl";
-// import { Girl } from "../components/Girl";
 
 const Settings = () => {
   const [lableDisplay, setLableDisplay] = useState(false);
   const { userName, userEmail, userPassword, setUserState } =
     useContext(InventoryContext);
 
-  const myRef = useRef(null);
-  const executeScroll = () => myRef.current.scrollIntoView();
-
   return (
-    <div className="mx-4" style={{ height: "2000px" }}>
+    <div className="mx-4">
       <div className="comp-head my-4">
-        <h1 className="text-xl font-bold ">
-          Mange Your Profile here pretty 🥀
-        </h1>
-        <p className="text-slate-500">😆 ماتتحمسيش مزال مرهش يمشي </p>
+        <h1 className="text-xl font-bold ">Mange Your Profile here Ugly 😝</h1>
+        <p className="text-slate-500"> </p>
       </div>
       <div className="flex flex-col items-center">
         <div className="mb-4 relative">
@@ -121,37 +114,6 @@ const Settings = () => {
             </button>
           </div>
         </form>
-        <div>
-          <p>Note: This page only for Charming girl ❤️💚</p>
-        </div>
-      </div>
-
-      {/* hna hadeel */}
-      <div
-        className="w-60 bg-teal-700	rounded-md ms-auto text-center "
-        style={{ scrollBehavior: "smooth" }}
-        onClick={() => executeScroll()}
-      >
-        <p className="font-semibold text-lg text-white">
-          Click me تحبي نحكيلك حكاية{" "}
-        </p>
-      </div>
-      <div style={{ height: "400px" }}></div>
-      <div ref={myRef}>
-        <div className="mx-auto mb-4 rounded-lg text-right text-white w-fit bg-teal-700 p-3">
-          <h1>تعرفي علاش حبيت نحكي معاك ؟</h1>
-          <p>
-            في بودواو كان عندي وحد لبلاصة ديما نروح نريح فيها نتخلوا معا روحي
-            ونخمم جاية بلاصة شابة
-          </p>
-          <p> لعام هادا مارحتش كامل </p>
-          <p> ...كي شفتك أول خطرة جات في بالي هاديك لبلاصة </p>
-          <p>🌳🌳 و كي دخلت للكونت نتاعك لقيت هادو </p>
-
-          <p>So I'm glad that I can speak with you right now...</p>
-        </div>
-        <Girl />
-        <p>🕊️ و هادا البارتي الثاني علاش قتلك ننشبهي للحمامة</p>
       </div>
     </div>
   );

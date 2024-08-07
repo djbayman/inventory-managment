@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { InventoryContext } from "../../context/GlobalContext";
 
 const ProductDetails = () => {
@@ -10,7 +10,29 @@ const ProductDetails = () => {
     companyName,
     setProductImgs,
     setStates,
+    setNext,
   } = useContext(InventoryContext);
+
+  useEffect(() => {
+    if (
+      productID &&
+      productName &&
+      productQuantity &&
+      productPrice &&
+      companyName
+    ) {
+      setNext(true);
+    } else {
+      setNext(false);
+    }
+  }, [
+    productID,
+    productName,
+    productQuantity,
+    productPrice,
+    companyName,
+    setNext,
+  ]);
 
   return (
     <div>

@@ -1,14 +1,15 @@
 import { FaCube } from "react-icons/fa6";
 import { MdPermContactCalendar } from "react-icons/md";
 import { FaCheckCircle } from "react-icons/fa";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { InventoryContext } from "../../context/GlobalContext";
 import EditeProductDetails from "./EditeProductDetails";
 import EditeSupplierDetails from "./EditeSupplierDetails";
 import EditeComplete from "./EditeComplete";
 
 const EditProduct = () => {
-  const { edteStep, setEditeStep } = useContext(InventoryContext);
+  const [editeStep, setEditeStep] = useState(1);
+  const { editeNext } = useContext(InventoryContext);
 
   return (
     <div className="mx-4">
@@ -20,7 +21,7 @@ const EditProduct = () => {
         <p className="flex items-center gap-2 w-56 justify-center">
           <span
             className={
-              edteStep === 1
+              editeStep === 1
                 ? "w-7 h-7 rounded-full bg-cyan-600 flex items-center justify-center transition-all"
                 : "hidden"
             }
@@ -33,7 +34,7 @@ const EditProduct = () => {
         <p className="flex items-center gap-2 w-56 justify-center">
           <span
             className={
-              edteStep === 2
+              editeStep === 2
                 ? "w-7 h-7 rounded-full bg-cyan-600 flex items-center justify-center transition-all"
                 : "hidden"
             }
@@ -47,7 +48,7 @@ const EditProduct = () => {
         <p className="flex items-center gap-2 w-56 justify-center">
           <span
             className={
-              edteStep === 3
+              editeStep === 3
                 ? "w-7 h-7 rounded-full bg-cyan-600 flex items-center justify-center transition-all"
                 : "hidden"
             }
@@ -59,11 +60,11 @@ const EditProduct = () => {
         </p>
       </div>
       <div className="min-h-40">
-        {edteStep === 1 ? (
+        {editeStep === 1 ? (
           <EditeProductDetails />
-        ) : edteStep === 2 ? (
+        ) : editeStep === 2 ? (
           <EditeSupplierDetails />
-        ) : edteStep === 3 ? (
+        ) : editeStep === 3 ? (
           <EditeComplete />
         ) : (
           ""
@@ -73,21 +74,23 @@ const EditProduct = () => {
       <div className="flex items-center justify-between my-6 mx-8">
         <button
           className={
-            edteStep === 1
+            editeStep === 1
               ? "invisible"
               : "px-4 py-1 bg-slate-300 hover:bg-slate-400 transition-colors font-semibold rounded-md"
           }
-          onClick={() => setEditeStep(edteStep - 1)}
+          onClick={() => setEditeStep(editeStep - 1)}
         >
           Back
         </button>
         <button
-          className={
-            edteStep === 3
-              ? "hidden"
-              : "px-4 py-1 bg-cyan-600 hover:bg-cyan-700 transition-colors text-white font-semibold rounded-md"
-          }
-          onClick={() => setEditeStep(edteStep + 1)}
+          className={`${
+            editeNext
+              ? " bg-cyan-600 hover:bg-cyan-700 text-white"
+              : " bg-gray-600  text-white cursor-not-allowed"
+          } px-4 py-1 font-semibold rounded-md transition-colors ${
+            editeStep === 3 ? "hidden" : ""
+          }`}
+          onClick={() => setEditeStep(editeNext ? editeStep + 1 : editeStep)}
         >
           Next
         </button>

@@ -1,21 +1,40 @@
 import logo from "../assets/download.png";
-import icon from "../assets/438089354_957421755750130_9050087029746523769_n.jpg";
+import icon from "../assets/hadeel/453114599_850935406504478_7290397330912126867_n.gif";
 import { MdDashboard } from "react-icons/md";
 import { FaListCheck } from "react-icons/fa6";
 import { FiSettings } from "react-icons/fi";
 import { FaShapes } from "react-icons/fa6";
 import { MdOutlineLogout } from "react-icons/md";
 import { Link, NavLink } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { InventoryContext } from "../context/GlobalContext";
 
 const Sidebar = () => {
-  const { sideBarToggle } = useContext(InventoryContext);
+  const [width, setWidth] = useState();
+  const { sideBarToggle, setSideBarToggle } = useContext(InventoryContext);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    if (width <= 920) {
+      setSideBarToggle(false);
+    } else {
+      setSideBarToggle(true);
+    }
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [width, setSideBarToggle]);
 
   return (
     <div className="sticky top-0 " style={{ transition: "all linear 0.5s" }}>
       <div className="bg-cyan-900 text-white py-6 px-2 h-screen">
-        <Link to="/">
+        <Link to="/dashboard">
           <div className="logo xl:flex items-center text-center xl:text-left  gap-2 ">
             <img
               src={logo}
@@ -103,12 +122,9 @@ const Sidebar = () => {
               />
               {sideBarToggle && (
                 <div>
-                  <p className="font-semibold text-slate-300">Hadeel 🙂</p>
-                  <span className="text-xs text-slate-100 block">
-                    The White princesse ♥️
-                  </span>
-                  <span className="text-xs text-slate-100 block">
-                    The Nature girl 🌴 🍉
+                  <p className="font-semibold text-slate-300">Aymane 🙂</p>
+                  <span className="text-xs text-slate-100 ">
+                    Trust The Process..
                   </span>
                 </div>
               )}

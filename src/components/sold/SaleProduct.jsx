@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { FaCube } from "react-icons/fa6";
 import { MdPermContactCalendar } from "react-icons/md";
@@ -10,7 +10,9 @@ import SaleComplete from "./SaleComplete";
 import SoldProductClients from "./SoldProductClients";
 
 const SaleProduct = () => {
-  const { saleStep, setSaleStep } = useContext(InventoryContext);
+  const [saleStep, setSaleStep] = useState(1);
+  const { soldNext } = useContext(InventoryContext);
+
   return (
     <div className="mx-4">
       <div className="comp-head my-4">
@@ -84,12 +86,14 @@ const SaleProduct = () => {
           Back
         </button>
         <button
-          className={
-            saleStep === 3
-              ? "hidden"
-              : "px-4 py-1 bg-cyan-600 hover:bg-cyan-700 transition-colors text-white font-semibold rounded-md"
-          }
-          onClick={() => setSaleStep(saleStep + 1)}
+          className={`${
+            soldNext
+              ? " bg-cyan-600 hover:bg-cyan-700 text-white"
+              : " bg-gray-600  text-white cursor-not-allowed"
+          } px-4 py-1 font-semibold rounded-md transition-colors ${
+            saleStep === 3 ? "hidden" : ""
+          }`}
+          onClick={() => setSaleStep(soldNext ? saleStep + 1 : saleStep)}
         >
           Next
         </button>

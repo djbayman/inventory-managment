@@ -10,6 +10,8 @@ export const initialState = {
   companyName: "",
   supplierID: "",
   supplierName: "",
+  supplierEmail: "",
+  supplierPhone: "",
   date: "",
 };
 
@@ -21,6 +23,8 @@ export const saleInitialState = {
   soldCompanyName: "",
   soldProductClientID: "",
   soldProductClientName: "",
+  soldProductClientEmail: "",
+  soldProductClientPhone: "",
   soldDate: "",
 };
 
@@ -33,24 +37,22 @@ export const editeInitialState = {
   editeProductImg: "",
   editeSupplierID: "",
   editeSupplierName: "",
+  editeSupplierEmail: "",
+  editeSupplierPhone: "",
   editeDate: "",
 };
 
 const InventoryProvider = ({ children }) => {
-  const [step, setStep] = useState(1);
-  const [edteStep, setEditeStep] = useState(1);
-  const [saleStep, setSaleStep] = useState(1);
   const [sideBarToggle, setSideBarToggle] = useState(true);
-  const [keys, setKeys] = useState([]);
-  const [fetchedData, setFetchedData] = useState([]);
-  const [fetchedSoldData, setFetchedSoldData] = useState([]);
-  const [soldKeys, setSoldKeys] = useState([]);
   const [saleIt, setSaleIt] = useState([]);
   const [searchedResults, setSearchedResults] = useState([]);
   const [productImgs, setProductImgs] = useState(null);
   const [soldProductImgs, setSoldProductImgs] = useState(null);
   const [imgUrls, setImgUrls] = useState([]);
   const [soldImgUrls, setSoldImgUrls] = useState([]);
+  const [next, setNext] = useState(false);
+  const [soldNext, setSoldNext] = useState(false);
+  const [editeNext, setEditeNext] = useState(false);
 
   const [
     {
@@ -61,6 +63,8 @@ const InventoryProvider = ({ children }) => {
       companyName,
       supplierID,
       supplierName,
+      supplierEmail,
+      supplierPhone,
       date,
     },
     setStates,
@@ -75,6 +79,8 @@ const InventoryProvider = ({ children }) => {
       editeProductImg,
       editeSupplierID,
       editeSupplierName,
+      editeSupplierEmail,
+      editeSupplierPhone,
       editeDate,
     },
     setEditeStates,
@@ -88,6 +94,8 @@ const InventoryProvider = ({ children }) => {
       soldCompanyName,
       soldProductClientID,
       soldProductClientName,
+      soldProductClientEmail,
+      soldProductClientPhone,
       soldDate,
     },
     setSoldProductStates,
@@ -95,10 +103,6 @@ const InventoryProvider = ({ children }) => {
   const [{ userName, userEmail, userPassowrd }, setUserState] = useState("");
 
   const value = {
-    step,
-    setStep,
-    edteStep,
-    setEditeStep,
     sideBarToggle,
     setSideBarToggle,
     productID,
@@ -108,12 +112,10 @@ const InventoryProvider = ({ children }) => {
     companyName,
     supplierID,
     supplierName,
+    supplierEmail,
+    supplierPhone,
     date,
     setStates,
-    fetchedData,
-    setFetchedData,
-    keys,
-    setKeys,
     editeProductID,
     editeProductName,
     editeProductQuantity,
@@ -122,10 +124,10 @@ const InventoryProvider = ({ children }) => {
     editeProductImg,
     editeSupplierID,
     editeSupplierName,
+    editeSupplierEmail,
+    editeSupplierPhone,
     editeDate,
     setEditeStates,
-    saleStep,
-    setSaleStep,
     soldProductID,
     soldProductName,
     soldProductQuantity,
@@ -133,12 +135,10 @@ const InventoryProvider = ({ children }) => {
     soldCompanyName,
     soldProductClientID,
     soldProductClientName,
+    soldProductClientEmail,
+    soldProductClientPhone,
     soldDate,
     setSoldProductStates,
-    fetchedSoldData,
-    setFetchedSoldData,
-    soldKeys,
-    setSoldKeys,
     saleIt,
     setSaleIt,
     searchedResults,
@@ -155,6 +155,12 @@ const InventoryProvider = ({ children }) => {
     setSoldProductImgs,
     soldImgUrls,
     setSoldImgUrls,
+    next,
+    setNext,
+    soldNext,
+    setSoldNext,
+    editeNext,
+    setEditeNext,
   };
 
   return (

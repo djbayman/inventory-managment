@@ -14,7 +14,29 @@ const SoldProductDetails = () => {
     setSoldProductStates,
     saleIt,
     setSoldProductImgs,
+    setSoldNext,
   } = useContext(InventoryContext);
+
+  useEffect(() => {
+    if (
+      soldProductID &&
+      soldProductName &&
+      soldProductQuantity &&
+      soldProductPrice &&
+      soldCompanyName
+    ) {
+      setSoldNext(true);
+    } else {
+      setSoldNext(false);
+    }
+  }, [
+    soldProductID,
+    soldProductName,
+    soldProductPrice,
+    soldProductQuantity,
+    soldCompanyName,
+    setSoldNext,
+  ]);
 
   useEffect(() => {
     if (previousLocationPathname === "/purchases") {
@@ -24,7 +46,9 @@ const SoldProductDetails = () => {
         soldProductQuantity: saleIt[0]?.productQuantity,
         soldProductPrice: saleIt[0]?.productPrice,
         soldCompanyName: saleIt[0]?.companyName,
-        // soldProductImg: saleIt[0]?.productImg,
+        soldProductClientID: "",
+        soldProductClientName: "",
+        soldFireID: saleIt[0]?.fireID,
       });
     }
   }, [previousLocationPathname, saleIt, setSoldProductStates]);

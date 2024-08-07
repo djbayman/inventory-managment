@@ -12,34 +12,18 @@ import { InventoryContext } from "./context/GlobalContext";
 import EditProduct from "./components/edite/EditProduct";
 import SaleProduct from "./components/sold/SaleProduct";
 import Dashboard from "./components/Dashboard";
+import Layout from "./components/Layout";
+import NoMatch from "./components/NoMatch";
 
 function App() {
-  const { sideBarToggle } = useContext(InventoryContext);
+  // const { sideBarToggle } = useContext(InventoryContext);
   return (
-    <div className="App  flex">
-      <div
-        className={sideBarToggle ? "w-1/6 min-w-min" : "w-14"}
-        style={{ transition: "all 0.5s ease-out allow-discrete" }}
-      >
-        <Sidebar />
-      </div>
-      <main className="w-full">
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="purchases" element={<Purchases />} />
-          <Route path="/purchases/addProduct" element={<AddProduct />} />
-          <Route
-            path="/purchases/editeProduct/:index"
-            element={<EditProduct />}
-          />
-          <Route path="/sales" element={<Sales />} />
-          <Route path="/sales/soldProduct" element={<SaleProduct />} />
-          <Route path="/sales/editeProduct/:index" element={<EditProduct />} />
-          <Route path="/settings" element={<Settings />} />
-        </Routes>
-      </main>
+    <div className="App">
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/s/*" element={<Layout />} />
+        <Route path="*" element={<NoMatch />} />
+      </Routes>
     </div>
   );
 }
