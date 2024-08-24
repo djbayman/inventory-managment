@@ -7,38 +7,14 @@ import { useContext, useEffect, useState } from "react";
 import { InventoryContext } from "../context/GlobalContext";
 import useFetch from "./CRUD/useFetch";
 import useDelete from "./CRUD/useDelete";
-import { getDatabase, onValue, ref } from "firebase/database";
-import { app } from "../firebaseConfig";
-import usePost from "./CRUD/usePost";
 
 const Sales = () => {
-  // const [fetchOP, setFetchOP] = useState([]);
   const [toggle, setToggle] = useState({});
-  const { setEditeStates, searchedResults, soldImgUrls, soldProductName } =
+  const { setEditeStates, searchedResults, soldImgUrls } =
     useContext(InventoryContext);
 
-  const { fetchSales, fetchPurchases } = useFetch();
+  const { fetchSales, isPending } = useFetch();
   const { deleteSales } = useDelete();
-
-  // const fetchOpData = async () => {
-  //   let checkExistencePrd = fetchPurchases?.filter(
-  //     (product) =>
-  //       product?.productName.toLowerCase() === soldProductName.toLowerCase()
-  //   );
-  //   const db = getDatabase(app);
-  //   const dbRef = ref(db, `inventory/op/${checkExistencePrd[0]?.fireID}`);
-  //   onValue(dbRef, (snapshot) => {
-  //     const data = snapshot.val();
-  //     if (data) {
-  //       setFetchOP(data);
-  // console.log(fetchOP);
-  //     }
-  //   });
-  // };
-
-  // useEffect(() => {
-  //   fetchOpData();
-  // }, []);
 
   const toggleFunction = (id) => {
     setToggle({
@@ -72,11 +48,13 @@ const Sales = () => {
 
   let theMainContent = searchedResults?.length ? searchedResults : results;
 
+  if (isPending) return <p>Loading...</p>;
+
   return (
     <div className="mx-4">
       <div className="comp-head my-3 flex items-center justify-between">
         <h1 className="text-xl font-bold">Sold Products</h1>
-        <Link to="/sales/soldProduct">
+        <Link to="/s/sales/soldProduct">
           <button className="shadow-lg shadow-indigo-500/50 ms-auto px-2 py-2 border-2 border-cyan-700 bg-cyan-600 hover:bg-cyan-700 transition-colors text-white  font-semibold flex items-center rounded-md gap-2">
             <span>
               <FaPlus />
@@ -117,7 +95,7 @@ const Sales = () => {
               <li className="my-auto ">{data.soldProductName}</li>
               <li>
                 <img
-                  src={soldImgUrls[index]}
+                  src={data.soldProductImgUrl}
                   alt=""
                   className="w-10 h-10 rounded-full my-auto"
                 />
@@ -138,7 +116,7 @@ const Sales = () => {
                       : "hidden"
                   }
                 >
-                  <Link to={`/sales/editeProduct/${data.soldFireID}`}>
+                  <Link to={`/s/sales/editeProduct/${data.soldFireID}`}>
                     <span
                       className="flex items-center gap-2 ps-4 pb-2
                       hover:border-x-4 hover:border-cyan-600 transition-colors

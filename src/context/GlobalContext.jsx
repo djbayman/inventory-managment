@@ -53,6 +53,8 @@ const InventoryProvider = ({ children }) => {
   const [next, setNext] = useState(false);
   const [soldNext, setSoldNext] = useState(false);
   const [editeNext, setEditeNext] = useState(false);
+  const [userId, setUserId] = useState("");
+  const [navHead, setNavHead] = useState("");
 
   const [
     {
@@ -100,7 +102,24 @@ const InventoryProvider = ({ children }) => {
     },
     setSoldProductStates,
   ] = useState(saleInitialState);
-  const [{ userName, userEmail, userPassowrd }, setUserState] = useState("");
+  const [
+    {
+      userFirstName,
+      userLastName,
+      userEmail,
+      userCurrentPassword,
+      userNewPassword,
+      userPhoto,
+    },
+    setUserState,
+  ] = useState({
+    userFirstName: "",
+    userLastName: "",
+    userEmail: "",
+    userCurrentPassword: "",
+    userNewPassword: "",
+    userPhoto: "",
+  });
 
   const value = {
     sideBarToggle,
@@ -143,9 +162,12 @@ const InventoryProvider = ({ children }) => {
     setSaleIt,
     searchedResults,
     setSearchedResults,
-    userName,
+    userFirstName,
+    userLastName,
+    userPhoto,
     userEmail,
-    userPassowrd,
+    userCurrentPassword,
+    userNewPassword,
     setUserState,
     productImgs,
     setProductImgs,
@@ -161,6 +183,10 @@ const InventoryProvider = ({ children }) => {
     setSoldNext,
     editeNext,
     setEditeNext,
+    userId,
+    setUserId,
+    navHead,
+    setNavHead,
   };
 
   return (

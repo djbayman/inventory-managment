@@ -17,8 +17,8 @@ const ProductDetails = () => {
     if (
       productID &&
       productName &&
-      productQuantity &&
-      productPrice &&
+      !isNaN(parseInt(productQuantity)) &&
+      !isNaN(parseInt(productPrice)) &&
       companyName
     ) {
       setNext(true);

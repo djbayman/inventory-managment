@@ -21,8 +21,8 @@ const SoldProductDetails = () => {
     if (
       soldProductID &&
       soldProductName &&
-      soldProductQuantity &&
-      soldProductPrice &&
+      !isNaN(parseInt(soldProductQuantity)) &&
+      !isNaN(parseInt(soldProductPrice)) &&
       soldCompanyName
     ) {
       setSoldNext(true);
@@ -39,7 +39,7 @@ const SoldProductDetails = () => {
   ]);
 
   useEffect(() => {
-    if (previousLocationPathname === "/purchases") {
+    if (previousLocationPathname === "/s/purchases") {
       setSoldProductStates({
         soldProductID: saleIt[0]?.productID,
         soldProductName: saleIt[0]?.productName,

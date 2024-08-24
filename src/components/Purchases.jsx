@@ -3,7 +3,7 @@ import { FaPlus } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FiEdit3, FiTrash2 } from "react-icons/fi";
 import { CgDollar } from "react-icons/cg";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { InventoryContext } from "../context/GlobalContext";
 import useFetch from "./CRUD/useFetch";
 import useDelete from "./CRUD/useDelete";
@@ -12,7 +12,7 @@ const Purchases = () => {
   const [toggle, setToggle] = useState({});
   let navigate = useNavigate();
   let location = useLocation();
-  const { setEditeStates, setSaleIt, searchedResults, imgUrls } =
+  const { setEditeStates, setSaleIt, searchedResults } =
     useContext(InventoryContext);
 
   const { fetchPurchases } = useFetch();
@@ -28,13 +28,15 @@ const Purchases = () => {
       editeCompanyName: specificProduct[0]?.companyName,
       editeSupplierID: specificProduct[0]?.supplierID,
       editeSupplierName: specificProduct[0]?.supplierName,
+      editeSupplierEmail: specificProduct[0]?.supplierEmail,
+      editeSupplierPhone: specificProduct[0]?.supplierPhone,
     });
   };
 
   const saleItProduct = (index) => {
     let specificProduct = fetchPurchases?.filter((data, i) => i === index);
     setSaleIt(specificProduct);
-    navigate("/sales/soldProduct", {
+    navigate("/s/sales/soldProduct", {
       state: { previousLocationPathname: location.pathname },
     });
   };
@@ -49,8 +51,6 @@ const Purchases = () => {
   let theMainContent = searchedResults?.length
     ? searchedResults
     : fetchPurchases;
-
-  console.log(theMainContent);
 
   return (
     <div className="mx-4">
@@ -110,7 +110,6 @@ const Purchases = () => {
                   className=" text-2xl text-cyan-950 cursor-pointer"
                   onClick={() => {
                     toggleFunction(index);
-                    // fetchOpData(data.fireID);
                   }}
                 />
                 <div
@@ -120,7 +119,7 @@ const Purchases = () => {
                       : "hidden"
                   }
                 >
-                  <Link to={`/purchases/editeProduct/${data.fireID}`}>
+                  <Link to={`/s/purchases/editeProduct/${data.fireID}`}>
                     <span
                       className="flex items-center gap-2 justify-center pb-2
                       hover:border-x-4 hover:border-cyan-600 hover:bg-gray-200 transition-colors

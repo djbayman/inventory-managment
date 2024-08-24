@@ -1,5 +1,5 @@
 import { Route, Routes, Outlet } from "react-router-dom";
-import { useContext } from "react";
+import { Suspense, useContext } from "react";
 import "../App.css";
 import { InventoryContext } from "../context/GlobalContext";
 
@@ -13,6 +13,7 @@ import EditProduct from "./edite/EditProduct";
 import SaleProduct from "./sold/SaleProduct";
 import Dashboard from "./Dashboard";
 import NoMatch from "./NoMatch";
+import Suppliers from "./Suppliers";
 
 const Layout = () => {
   const { sideBarToggle } = useContext(InventoryContext);
@@ -39,8 +40,8 @@ const Layout = () => {
           <Route path="/sales" element={<Sales />} />
           <Route path="/sales/soldProduct" element={<SaleProduct />} />
           <Route path="/sales/editeProduct/:index" element={<EditProduct />} />
+          <Route path="/list" element={<Suppliers />} />
           <Route path="/settings" element={<Settings />} />
-          {/* <Route path="/*" element={<Settings />} /> */}
           <Route path="*" element={<NoMatch />} />
         </Routes>
       </main>

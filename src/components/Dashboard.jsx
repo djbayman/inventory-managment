@@ -1,44 +1,48 @@
-import Suppliers from "./Suppliers";
-import Chart from "chart.js/auto";
-import { CategoryScale } from "chart.js";
-import Statictics from "./Statictics";
+import Chart from "../components/inv-statistics/Chart";
+import Statictics from "../components/inv-statistics/Statictics";
 import useFetch from "./CRUD/useFetch";
-import BarChart from "./LineChart";
 import { useEffect, useState } from "react";
-
-Chart.register(CategoryScale);
+import Analyse from "../components/inv-statistics/Analyse";
 
 const Dashboard = () => {
   const [graph, setGraph] = useState([]);
   const { fetchSales } = useFetch();
 
   useEffect(() => {
-    let Data = [];
+    let Data = [
+      { name: "Sat", Total: 1000 },
+      { name: "Sun", Total: 1200 },
+      { name: "Mon", Total: 1250 },
+      { name: "Tue", Total: 900 },
+      { name: "Wed", Total: 900 },
+      { name: "Thu", Total: 820 },
+      { name: "Fri", Total: 0 },
+    ];
+
     let keysArr;
     for (let i = 0; i < fetchSales.length; i++) {
       keysArr = Object.keys(fetchSales[i]);
       for (let j = 0; j < keysArr.length; j++) {
-        Data.push({
-          id: fetchSales[i][keysArr[j]].soldFireID,
-          date: fetchSales[i][keysArr[j]].soldDate,
-          price: fetchSales[i][keysArr[j]].soldProductPrice,
-          quantity: fetchSales[i][keysArr[j]].soldProductQuantity,
-          productName: fetchSales[i][keysArr[j]].soldProductName,
-        });
+        for (let h = 0; h < Data.length; h++) {
+          if (fetchSales[i][keysArr[j]].soldDate.includes(Data[h].name)) {
+            Data[h].Total += fetchSales[i][keysArr[j]].soldProductPrice;
+          }
+        }
       }
-
-      setGraph((prev) => [...prev, Data[i]]);
+      setGraph(Data);
     }
   }, [fetchSales]);
 
   return (
-    <>
-      <div className="">
-        <BarChart graph={graph} />
-      </div>
+    <div>
+      <Analyse />
+      <Chart
+        title="Graph represents the revenue of each day"
+        aspect={3 / 1}
+        graph={graph}
+      />
       <Statictics />
-      <Suppliers />
-    </>
+    </div>
   );
 };
 

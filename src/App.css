@@ -7,22 +7,19 @@ main {
     overflow-x: scroll;
   }
   .scroll-child {
-    width: 166%;
+    width: 135%;
   }
-}
-.home {
-  background-color: rgb(241 245 249);
-  display: flex;
-  min-height: 100vh;
-  justify-content: center;
-  align-items: center;
 }
 
 .form-container {
   width: 450px;
-  background-color: white;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(228 228 231);
   margin: auto;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
   padding: 10px;
 }
 
@@ -47,17 +44,14 @@ main {
   font-size: 16px;
   border: 0;
   font-family: "Roboto", sans-serif;
+  background: #f2f2f2;
 }
 
-span {
+#password-error {
   font-family: "Roboto", sans-serif;
   font-size: 14px;
   color: red;
   margin-bottom: 15px;
-}
-
-input {
-  background: #f2f2f2;
 }
 
 .error {
@@ -65,16 +59,43 @@ input {
   border: 2px solid #ffa4a4;
 }
 
-button {
+button.form-field {
   background: rgb(21 94 117);
   color: white;
   cursor: pointer;
   transition: all 0.3s;
 }
-button:hover {
-  background: rgb(15, 63, 78);
-}
 
 button:disabled {
   cursor: default;
+}
+
+.continue-p {
+  font-size: 12px;
+  color: #7e7c7c;
+  font-weight: 600;
+  margin-top: 1rem;
+  text-align: center;
+}
+canvas {
+  width: 95% !important;
+  height: 370px !important;
+}
+.chart {
+  flex: 4;
+  -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+  box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+  padding: 10px;
+  color: gray;
+}
+.title {
+  text-align: center;
+  color: black;
+  font-weight: 500;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-bottom: 20px;
+}
+
+.chartGrid {
+  stroke: rgb(228, 225, 225);
 }

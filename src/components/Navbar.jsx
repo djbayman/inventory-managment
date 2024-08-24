@@ -3,33 +3,39 @@ import { FaArrowLeft } from "react-icons/fa";
 import { InventoryContext } from "../context/GlobalContext";
 import { useLocation } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
+import useFetch from "./CRUD/useFetch";
 
 const Navbar = () => {
   const [searchValue, setSearchValue] = useState("");
   const location = useLocation().pathname;
-  const {
-    sideBarToggle,
-    setSideBarToggle,
-    fetchedData,
-    setSearchedResults,
-    fetchedSoldData,
-  } = useContext(InventoryContext);
+  const { sideBarToggle, setSideBarToggle, setSearchedResults } =
+    useContext(InventoryContext);
+
+  const { fetchPurchases, fetchSales } = useFetch();
+  let data = [];
+  let keysArr;
+  for (let i = 0; i < fetchSales.length; i++) {
+    keysArr = Object.keys(fetchSales[i]);
+    for (let j = 0; j < keysArr.length; j++) {
+      data.push(fetchSales[i][keysArr[j]]);
+    }
+  }
 
   useEffect(() => {
     setSearchedResults([]);
     if (location.includes("purchases") && searchValue !== "") {
       const searchProduct = () => {
-        let searchResult = fetchedData?.filter((product) =>
+        let searchResult = fetchPurchases?.filter((product) =>
           product?.productName.toLowerCase().includes(searchValue.toLowerCase())
         );
         if (searchResult?.length) {
           setSearchedResults(searchResult);
         }
       };
-      searchProduct(fetchedData);
+      searchProduct();
     } else if (location.includes("sales") && searchValue !== "") {
       const searchProduct = () => {
-        let searchResult = fetchedSoldData?.filter((product) =>
+        let searchResult = data?.filter((product) =>
           product?.soldProductName
             .toLowerCase()
             .includes(searchValue.toLowerCase())
@@ -40,7 +46,11 @@ const Navbar = () => {
       };
       searchProduct();
     }
-  }, [searchValue, fetchedData, location, fetchedSoldData, setSearchedResults]);
+  }, [searchValue, fetchPurchases, location, setSearchedResults]);
+
+  let searchDisplay = false;
+  if (location.includes("purchases") || location.includes("sales"))
+    searchDisplay = true;
 
   return (
     <div className="flex items-center justify-between p-4 shadow-md ">
@@ -51,18 +61,22 @@ const Navbar = () => {
           }`}
           onClick={() => setSideBarToggle(!sideBarToggle)}
         />
-        <h1 className="text-xl font-bold ps-2">Dashboard</h1>
+        <h1 className="text-xl font-bold ps-2">
+          {location.slice(3, 4).toLocaleUpperCase() + location.slice(4)}
+        </h1>
       </div>
-      <div className="details flex w-60 relative">
-        <input
-          type="text"
-          placeholder="Search for product by it's name"
-          className=" w-full font-semibold bg-gray-200 text-cyan-900 border-y-2 border-2 border-gray-500  ps-2 py-1 text-sm rounded-lg outline-none "
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
-        />
-        <FaSearch className="absolute text-cyan-800 top-2 right-2" />
-      </div>
+      {searchDisplay && (
+        <div className="details flex w-60 relative">
+          <input
+            type="text"
+            placeholder="Search for product by it's name"
+            className=" w-full font-semibold bg-gray-200 text-cyan-900 border-y-2 border-2 border-gray-500  ps-2 py-1 text-sm rounded-lg outline-none "
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+          />
+          <FaSearch className="absolute text-cyan-800 top-2 right-2" />
+        </div>
+      )}
     </div>
   );
 };

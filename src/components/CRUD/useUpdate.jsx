@@ -1,5 +1,5 @@
 import { getDatabase, update, ref } from "firebase/database";
-import { app } from "../../firebaseConfig";
+import { app, auth, storage } from "../../firebaseConfig";
 import { useNavigate, useParams } from "react-router-dom";
 import { useContext } from "react";
 import {
@@ -7,13 +7,21 @@ import {
   InventoryContext,
 } from "../../context/GlobalContext";
 import useFetch from "./useFetch";
+import {
+  EmailAuthProvider,
+  reauthenticateWithCredential,
+  updateEmail,
+  updatePassword,
+} from "firebase/auth";
+// import photoDefult from "../../assets/default.png";
+import { toast } from "react-toastify";
+import { getDownloadURL, uploadBytes, ref as stRef } from "firebase/storage";
 
 const useUpdate = () => {
   const { index } = useParams();
   const navigate = useNavigate();
 
   const {
-    setEditeStep,
     editeProductID,
     editeProductName,
     editeProductQuantity,
@@ -24,13 +32,23 @@ const useUpdate = () => {
     editeSupplierEmail,
     editeSupplierPhone,
     setEditeStates,
+    userId,
+    userFirstName,
+    userLastName,
+    userEmail,
+    userCurrentPassword,
+    userNewPassword,
+    userPhoto,
+    setUserState,
+    productImgs,
+    soldProductImgs,
   } = useContext(InventoryContext);
 
   const { fetchPurchases } = useFetch();
 
   const updatePurchases = async () => {
     const db = getDatabase(app);
-    update(ref(db, "inventory/purchases/" + index), {
+    update(ref(db, `inventory/${userId}/purchases/` + index), {
       productID: editeProductID,
       productName: editeProductName,
       productQuantity: editeProductQuantity,
@@ -43,28 +61,41 @@ const useUpdate = () => {
       fireID: index,
     })
       .then(() => {
+        // post img in storage
+        if (productImgs === null) return;
+        // const previmgRef = stRef(storage, "inv-file");
+        const imageRef = stRef(storage, `inv-file/purchasesImgs/${index}`);
+        uploadBytes(imageRef, productImgs).then((snapshot) => {
+          getDownloadURL(snapshot.ref).then((url) => {
+            update(ref(db, `inventory/${userId}/purchases/` + index), {
+              productImgUrl: url,
+            });
+          });
+        });
         setEditeStates({
           ...editeInitialState,
         });
-        navigate("/purchases");
+        navigate("/s/purchases");
       })
-      .catch((err) => {
-        alert("err:", err);
+      .catch((error) => {
+        toast.error(error.message, {
+          position: "bottom-center",
+          autoClose: 2000,
+        });
       });
 
     //
-    update(ref(db, `inventory/op/${index}`), {
-      opProductID: editeProductID,
+    update(ref(db, `inventory/${userId}/op/${index}`), {
       opProductName: editeProductName,
       opProductPrice: editeProductPrice,
       opProductQuantity: editeProductQuantity,
-      opCompanyName: editeCompanyName,
-      opSupplierID: editeSupplierID,
       opSupplierName: editeSupplierName,
-      opSupplierEmail: editeSupplierEmail,
       opSupplierPhone: editeSupplierPhone,
-    }).catch((err) => {
-      alert("err:", err);
+    }).catch((error) => {
+      toast.error(error.message, {
+        position: "bottom-center",
+        autoClose: 2000,
+      });
     });
   };
 
@@ -74,7 +105,10 @@ const useUpdate = () => {
     );
     const db = getDatabase(app);
     update(
-      ref(db, `inventory/sales/${checkExistencePrd[0]["fireID"]}/${index}`),
+      ref(
+        db,
+        `inventory/${userId}/sales/${checkExistencePrd[0]["fireID"]}/${index}`
+      ),
       {
         soldProductID: editeProductID,
         soldProductName: editeProductName,
@@ -86,28 +120,105 @@ const useUpdate = () => {
       }
     )
       .then(() => {
-        setEditeStep(1);
+        // post img in storage
+        if (soldProductImgs === null) return;
+        // const previmgRef = stRef(storage, "inv-file");
+        const imageRef = stRef(storage, `inv-file/salesImgs/${index}`);
+        uploadBytes(imageRef, productImgs).then((snapshot) => {
+          getDownloadURL(snapshot.ref).then((url) => {
+            update(ref(db, `inventory/${userId}/sales/` + index), {
+              soldProductImgUrl: url,
+            });
+          });
+        });
         setEditeStates({
           ...editeInitialState,
         });
-        navigate("/sales");
+        navigate("/s/sales");
       })
-      .catch((err) => {
-        alert("err:", err);
+      .catch((error) => {
+        toast.error(error.message, {
+          position: "bottom-center",
+          autoClose: 2000,
+        });
       });
     // update the op db
-    update(ref(db, `inventory/op/${checkExistencePrd[0]["fireID"]}`), {
-      opProductName: editeProductName,
-      opProductPrice: editeProductPrice,
-      opProductQuantity: editeProductQuantity,
-    }).catch((err) => {
-      alert("err:", err);
+    update(
+      ref(db, `inventory/${userId}/op/${checkExistencePrd[0]["fireID"]}`),
+      {
+        opProductName: editeProductName,
+        opProductPrice: editeProductPrice,
+        opProductQuantity: editeProductQuantity,
+      }
+    ).catch((error) => {
+      toast.error(error.message, {
+        position: "bottom-center",
+        autoClose: 2000,
+      });
     });
+  };
+
+  //
+  const updateProfil = async () => {
+    const db = getDatabase(app);
+    const imageRef = stRef(storage, `inv-file/AuthImgs/avatar.png`);
+    if (userFirstName && userLastName && userEmail) {
+      update(ref(db, `inventory/${userId}/Auth`), {
+        firstName: userFirstName,
+        lastName: userLastName,
+        email: userEmail,
+        photo: "",
+      });
+      let credentail = EmailAuthProvider.credential(
+        auth.currentUser.email,
+        userCurrentPassword
+      );
+      await reauthenticateWithCredential(auth.currentUser, credentail).catch(
+        (error) => {
+          toast.error(error.message, {
+            position: "bottom-center",
+            autoClose: 2000,
+          });
+        }
+      );
+
+      await updateEmail(auth.currentUser, userEmail).catch((error) =>
+        toast.error(error.message, {
+          position: "bottom-center",
+          autoClose: 2000,
+        })
+      );
+      await updatePassword(auth.currentUser, userNewPassword)
+        .then(() => {
+          setUserState({
+            userFirstName: "",
+            userLastName: "",
+            userEmail: "",
+            userCurrentPassword: "",
+            userNewPassword: "",
+          });
+          //
+          uploadBytes(imageRef, userPhoto).then((snapshot) => {
+            getDownloadURL(snapshot.ref).then((url) => {
+              update(ref(db, `inventory/${userId}/Auth`), {
+                photo: url,
+              });
+            });
+          });
+        })
+        .catch((error) => {
+          toast.error(error.message, {
+            position: "bottom-center",
+            autoClose: 2000,
+          });
+        });
+    }
   };
 
   return {
     updatePurchases: () => updatePurchases(),
     updateSales: () => updateSales(),
+    updateProfil: () => updateProfil(),
   };
 };
 

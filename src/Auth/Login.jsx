@@ -1,95 +1,104 @@
 import "../App.css";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { auth } from "../firebaseConfig";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { toast } from "react-toastify";
+import { InventoryContext } from "../context/GlobalContext";
+import { Link, useNavigate } from "react-router-dom";
+import SignInWithG from "./SignInWithG";
+import IntroNav from "../components/IntroNav";
+import Loading from "../components/Loading";
 
 export default function Login() {
-  const [values, setValues] = useState({
+  const navigate = useNavigate();
+  const [submitted, setSubmitted] = useState(false);
+  const [login, setLogin] = useState({
     email: "",
     password: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const { setUserId } = useContext(InventoryContext);
 
   const handleInputChange = (event) => {
     event.preventDefault();
-    // console.log(values.password);
     const { name, value } = event.target;
-    setValues((values) => ({
+    setLogin((values) => ({
       ...values,
       [name]: value,
     }));
   };
 
-  const [submitted, setSubmitted] = useState(false);
-  const [valid, setValid] = useState(false);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (values.email && values.password.length >= 8) {
-      setValid(true);
+    if (login.email && login.password.length >= 8) {
       try {
-        await signInWithEmailAndPassword(auth, values.email, values.password);
-        console.log("User logged in Successfully");
-        // window.location.href = "/profile";
-        // toast.success("User logged in Successfully", {
-        //   position: "top-center",
-        // });
+        setIsLoading(true);
+        await signInWithEmailAndPassword(auth, login.email, login.password);
+        setUserId(auth.currentUser.uid);
+        toast.success("User logged in Successfully", {
+          position: "top-center",
+          autoClose: 2000,
+        });
+        navigate("/s/dashboard");
       } catch (error) {
-        console.log(error.message);
-
-        // toast.error(error.message, {
-        //   position: "bottom-center",
-        // });
+        toast.error(error.message, {
+          position: "bottom-center",
+          autoClose: 2000,
+        });
+      } finally {
+        setIsLoading(false);
       }
     }
     setSubmitted(true);
   };
 
-  return (
-    <div className="form-container">
-      <form className="register-form" onSubmit={handleSubmit}>
-        {submitted && valid && (
-          <div className="success-message">
-            <h3> Welcome {values.email}</h3>
-            <div> Your login was successful! </div>
-          </div>
-        )}
+  if (isLoading) return <Loading />;
 
-        {!valid && (
+  return (
+    <>
+      <IntroNav />
+      <div className="form-container rounded-lg ">
+        <form className="register-form" onSubmit={handleSubmit}>
           <input
-            className="form-field"
+            className="form-field rounded-md focus:outline-2 focus:outline-cyan-700 "
             type="email"
             placeholder="Email"
             name="email"
-            value={values.email}
+            value={login.email}
             onChange={handleInputChange}
           />
-        )}
 
-        {submitted && !values.email && (
-          <span id="email-error">Please enter an email address</span>
-        )}
+          {submitted && !login.email && (
+            <span id="email-error">Please enter an email address</span>
+          )}
 
-        {!valid && (
           <input
-            className="form-field"
+            className="form-field rounded-md focus:outline-2 focus:outline-cyan-700"
             type="password"
             placeholder="Password"
             name="password"
-            value={values.password}
+            value={login.password}
             onChange={handleInputChange}
+            autoComplete="on"
           />
-        )}
 
-        {submitted && values.password.length < 8 && (
-          <span id="password-error">Please enter an correct password</span>
-        )}
-        {!valid && (
-          <button className="form-field" type="submit">
+          {submitted && login.password.length < 8 && (
+            <span id="password-error">Please enter an correct password</span>
+          )}
+
+          <button className="form-field rounded-md font-semibold" type="submit">
             Login
           </button>
-        )}
-      </form>
-    </div>
+          <SignInWithG />
+          <p className="forgot-password text-right mt-4 text-sm">
+            Don't have an account?
+            <Link to="/register" className="text-cyan-900 font-medium ps-2">
+              Register Here
+            </Link>
+          </p>
+        </form>
+      </div>
+    </>
   );
 }

@@ -1,7 +1,10 @@
 import { useContext, useEffect } from "react";
 import { InventoryContext } from "../../context/GlobalContext";
+import { useLocation } from "react-router-dom";
 
 const EditeProductDetails = () => {
+  const location = useLocation();
+
   const {
     editeProductID,
     editeProductName,
@@ -9,6 +12,7 @@ const EditeProductDetails = () => {
     editeProductPrice,
     editeCompanyName,
     setEditeStates,
+    setProductImgs,
     setSoldProductImgs,
     setEditeNext,
   } = useContext(InventoryContext);
@@ -17,8 +21,8 @@ const EditeProductDetails = () => {
     if (
       editeProductID &&
       editeProductName &&
-      editeProductQuantity &&
-      editeProductPrice &&
+      !isNaN(parseInt(editeProductQuantity)) &&
+      !isNaN(parseInt(editeProductPrice)) &&
       editeCompanyName
     ) {
       setEditeNext(true);
@@ -33,6 +37,14 @@ const EditeProductDetails = () => {
     editeCompanyName,
     setEditeNext,
   ]);
+
+  const handleImgUpdate = (e) => {
+    if (location.pathname.includes("purchases")) {
+      setProductImgs(e.target.files[0]);
+    } else if (location.pathname.includes("sales")) {
+      setSoldProductImgs(e.target.files[0]);
+    }
+  };
 
   return (
     <div>
@@ -115,7 +127,7 @@ const EditeProductDetails = () => {
       file:bg-indigo-500 file:text-white
       hover:file:bg-violet-50
       hover:file:text-cyan-800 cursor-pointer"
-            onChange={(e) => setSoldProductImgs(e.target.files[0])}
+            onChange={handleImgUpdate}
           />
         </label>
       </form>

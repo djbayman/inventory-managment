@@ -1,23 +1,25 @@
-import { getDatabase, ref, remove } from "firebase/database";
+import { getDatabase, ref, remove, update } from "firebase/database";
 import { app, storage } from "../../firebaseConfig";
 import { ref as stRef, deleteObject, listAll } from "firebase/storage";
 import useFetch from "./useFetch";
+import { useContext } from "react";
+import { InventoryContext } from "../../context/GlobalContext";
 
 const useDelete = () => {
-  const { fetchPurchases, fetchSales } = useFetch();
+  const { fetchPurchases, fetchSales, fetchOP } = useFetch();
+  const { userId } = useContext(InventoryContext);
 
   const deletePurchases = async (id, index) => {
     const globalRef = stRef(storage, `inv-file/purchasesImgs/`);
 
     const db = getDatabase(app);
-    const dbRefP = ref(db, "inventory/purchases/" + id);
-    const dbRefOP = ref(db, "inventory/op/P/" + id);
-    const dbRefOS = ref(db, "inventory/op/S/" + id);
-    const dbRefS = ref(db, "inventory/sales/" + id);
+    const dbRefP = ref(db, `inventory/${userId}/purchases/` + id);
+    const dbRefOP = ref(db, `inventory/${userId}/op/` + id);
+    const dbRefS = ref(db, `inventory/${userId}/sales/` + id);
     await remove(dbRefP);
     await remove(dbRefOP);
-    await remove(dbRefOS);
     await remove(dbRefS);
+
     if (fetchPurchases.length === 1) {
       window.location.reload();
     }
@@ -43,14 +45,19 @@ const useDelete = () => {
     const db = getDatabase(app);
     const dbRefS = ref(
       db,
-      `inventory/sales/${getParentId[0]["fireID"]}/${data.soldFireID}`
+      `inventory/${userId}/sales/${getParentId[0]["fireID"]}/${data.soldFireID}`
     );
-    const dbRefOS = ref(
-      db,
-      `inventory/op/S/${getParentId[0]["fireID"]}/${data.soldFireID}`
-    );
+    let result = fetchOP?.filter((op) => op[getParentId[0]?.fireID]);
+
     await remove(dbRefS);
-    await remove(dbRefOS);
+    await update(ref(db, `inventory/${userId}/op/${getParentId[0]?.fireID}`), {
+      opProductPrice:
+        parseInt(result[0][getParentId[0]?.fireID]?.opProductPrice) +
+        parseInt(data.soldProductPrice),
+      opProductQuantity:
+        parseInt(result[0][getParentId[0]?.fireID]?.opProductQuantity) +
+        parseInt(data.soldProductQuantity),
+    });
     if (fetchSales.length === 1) {
       window.location.reload();
     }
@@ -60,7 +67,7 @@ const useDelete = () => {
       let deletedImg = response?.items.filter((item, iItem) => iItem === index);
       const imgRef = stRef(
         storage,
-        `inv-file/purchasesImgs/${deletedImg[0]?.name}`
+        `inv-file/salesImgs/${deletedImg[0]?.name}`
       );
       deleteObject(imgRef);
     });
