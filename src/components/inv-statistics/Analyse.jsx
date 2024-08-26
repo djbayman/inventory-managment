@@ -22,8 +22,8 @@ const Analyse = () => {
   }
 
   return (
-    <div className="flex items-center gap-4 mx-8 my-6">
-      <div className="w-1/3 bg-zinc-100 rounded-md shadow px-8 py-4 min-h-28 hover:bg-emerald-200 transition-colors">
+    <div className="flex items-center  flex-col sm:flex-row gap-4 mx-8 my-6">
+      <div className="w-full  sm:w-1/3 bg-zinc-100 rounded-md shadow p-4 min-h-28 hover:bg-emerald-200 transition-colors">
         <p className=" font-semibold text-gray-400 flex items-center justify-between">
           Revenue
           <span className="ms-auto text-emerald-800 text-xl bg-emerald-200 rounded p-1">
@@ -32,7 +32,7 @@ const Analyse = () => {
         </p>
         <h2 className="mt-4 font-semibold">$ {total}</h2>
       </div>
-      <div className="w-1/3 bg-zinc-100 rounded-md shadow px-8 py-4 min-h-28 hover:bg-orange-200 transition-colors">
+      <div className="w-full  sm:w-1/3 bg-zinc-100 rounded-md shadow px-8 py-4 min-h-28 hover:bg-orange-200 transition-colors">
         <p className=" font-semibold text-gray-400 flex items-center justify-between">
           Expense
           <span className="ms-auto text-orange-800 bg-orange-200 p-1 rounded text-xl">
@@ -41,7 +41,7 @@ const Analyse = () => {
         </p>
         <h2 className="mt-4 font-semibold">$ {expense}</h2>
       </div>
-      <div className="w-1/3 bg-zinc-100 rounded-md shadow px-8 py-4 min-h-28 hover:bg-yellow-200 transition-colors">
+      <div className="w-full  sm:w-1/3 bg-zinc-100 rounded-md shadow px-8 py-4 min-h-28 hover:bg-yellow-200 transition-colors">
         <p className=" font-semibold text-gray-400 flex items-center justify-between">
           Intrest
           <span className="ms-auto text-yellow-600 bg-yellow-200 rounded p-1 text-xl">

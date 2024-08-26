@@ -26,7 +26,11 @@ const Layout = () => {
       >
         <Sidebar />
       </aside>
-      <main>
+      <main
+        className={`${
+          sideBarToggle ? "w-3/5 sm:w-full " : " w-10/12 sm:w-full"
+        }`}
+      >
         <Navbar />
         <Routes>
           <Route path="/" element={<Dashboard />} />

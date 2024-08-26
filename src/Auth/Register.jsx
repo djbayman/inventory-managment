@@ -89,7 +89,8 @@ export default function Register() {
   return (
     <>
       <IntroNav />
-      <div className="form-container rounded-lg">
+
+      <div className="form-container rounded-lg ">
         <form className="register-form" onSubmit={handleSubmit}>
           <input
             className="form-field rounded-md focus:outline-2 focus:outline-cyan-700 "

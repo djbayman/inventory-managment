@@ -59,7 +59,7 @@ const Sales = () => {
             <span>
               <FaPlus />
             </span>
-            Add to Sales
+            <span className="sm:block hidden">Add To Sales</span>
           </button>
         </Link>
       </div>

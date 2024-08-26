@@ -61,11 +61,11 @@ const Purchases = () => {
             <span>
               <FaPlus />
             </span>
-            Add Product
+            <span className="sm:block hidden">Add Product</span>
           </button>
         </Link>
       </div>
-      <div className="scroll-container border-2 rounded-md border-slate-300 min-h-64 my-6   ">
+      <div className="scroll-container  border-2 rounded-md border-slate-300 min-h-64 my-6   ">
         <ul
           className="scroll-child p-2 text-gray-900 text-sm grid gap-4  border-b-2 border-slate-300 "
           style={{

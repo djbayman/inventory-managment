@@ -55,7 +55,7 @@ const Settings = () => {
             }
           />
         </div>
-        <form className="w-1/3" onSubmit={(e) => e.preventDefault()}>
+        <form className="sm:w-1/3" onSubmit={(e) => e.preventDefault()}>
           <label className="flex items-center gap-2">
             <input
               type="text"

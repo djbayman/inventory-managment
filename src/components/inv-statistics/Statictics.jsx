@@ -16,7 +16,7 @@ const Statictics = () => {
   }
 
   return (
-    <div className="flex items-start justify-between gap-10 m-6">
+    <div className="flex items-start justify-between gap-10 m-2">
       <div style={{ width: "100%" }}>
         <div className=" bg-zinc-100 p-3 rounded-md  border-2 border-gray-300 min-h-40">
           <div className="flex items-center justify-between mb-2">
@@ -26,8 +26,6 @@ const Statictics = () => {
                 type="text"
                 placeholder="Search for product"
                 className=" w-full font-semibold bg-gray-200 text-cyan-900 border-y-2 border-2 border-gray-500  ps-2 py-1 text-sm rounded-lg outline-none "
-                // value={clientSearch}
-                // onChange={(e) => setClientSearch(e.target.value)}
               />
               <FaSearch className="absolute text-cyan-800 top-2 right-2" />
             </div>

@@ -53,7 +53,7 @@ const Navbar = () => {
     searchDisplay = true;
 
   return (
-    <div className="flex items-center justify-between p-4 shadow-md ">
+    <div className="flex items-center justify-between px-2 py-4 shadow-md ">
       <div className="flex items-center">
         <FaArrowLeft
           className={`text-cyan-900 cursor-pointer transition-transform  w-6    rounded-md hover:text-cyan-800 ${
@@ -66,11 +66,12 @@ const Navbar = () => {
         </h1>
       </div>
       {searchDisplay && (
-        <div className="details flex w-60 relative">
+        <div className="details flex w-32 sm:w-60 relative">
           <input
             type="text"
             placeholder="Search for product by it's name"
-            className=" w-full font-semibold bg-gray-200 text-cyan-900 border-y-2 border-2 border-gray-500  ps-2 py-1 text-sm rounded-lg outline-none "
+            className=" w-full font-semibold bg-gray-200 text-cyan-900 border-y-2 border-2 border-gray-500 text-sm  ps-2 py-1  rounded-lg outline-none "
+            // style={{ fontSize: "8px" }}
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}
           />
