@@ -67,7 +67,7 @@ const Sales = () => {
         <ul
           className="scroll-child p-2 text-gray-900 text-sm grid gap-4  border-b-2 border-slate-300 "
           style={{
-            gridTemplateColumns: "60px repeat(6, 1fr) 60px",
+            gridTemplateColumns: "repeat(8, minmax(60px, 1fr))",
           }}
         >
           <li className="border-e-2 border-slate-300 text-left my-auto">#</li>
@@ -85,7 +85,7 @@ const Sales = () => {
             <ul
               className="scroll-child p-2 text-gray-900 text-sm grid gap-4  border-b-2 border-slate-300 "
               style={{
-                gridTemplateColumns: "60px repeat(6, 1fr) 60px",
+                gridTemplateColumns: "repeat(8, minmax(60px, 1fr))",
               }}
               key={index}
             >
